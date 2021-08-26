@@ -35,7 +35,7 @@ spec:
         podSpec:
           containers:
             - name: hello-helidon-container
-              image: "iad.ocir.io/id9hokcxpkra/quickstart-mp:1.0"
+              image: "END_POINT_OF_YOUR_REGION/NAMESPACE_OF_YOUR_TENANCY/quickstart-mp:1.0"
               ports:
                 - containerPort: 8080
                   name: http
@@ -264,164 +264,89 @@ metadata:
 
 ## Task 2: Deploy the Helidon quickstart-mp application
 
-We need to download the source code, where we have configuration files, `bobs-books-app.yaml` and `bobs-books-comp.yaml`.
+Download the Verrazzano OAM component yaml file and Verrazzano Application Configuration files in the Cloud Shell environment:
 
-1. Download the Verrazzano OAM component yaml file and Verrazzano Application Configuration files of Bob's Book example. Click *Copy* and paste the command in the Cloud Shell as shown:
+```bash
+<copy>
+curl -LSs https://raw.githubusercontent.com/nagypeter/learning-library/master/developer-library/multicloud/helidon-verrazzano/hello-helidon-app.yaml >~/hello-helidon-app.yaml
+curl -LSs https://raw.githubusercontent.com/nagypeter/learning-library/master/developer-library/multicloud/helidon-verrazzano/hello-helidon-comp.yaml >~/hello-helidon-comp.yaml
+cd ~
+</copy>
+```
+Before use you need to modify the image name in *hello-helidon-comp.yaml*. You can use the `vi` editor:
+```bash
+<copy>vi hello-helidon-comp.yaml</copy>
+```
 
-    ```bash
-    <copy>
-    curl -LSs https://raw.githubusercontent.com/verrazzano/verrazzano/master/examples/bobs-books/bobs-books-app.yaml >~/bobs-books-app.yaml
-    curl -LSs https://raw.githubusercontent.com/verrazzano/verrazzano/master/examples/bobs-books/bobs-books-comp.yaml >~/bobs-books-comp.yaml
-    cd
-    </copy>
-    ```
+Use `i` to change insert mode and modify the image name to reflect your repository path at line 23:
+```yaml
+image: "END_POINT_OF_YOUR_REGION/NAMESPACE_OF_YOUR_TENANCY/quickstart-mp:1.0"
+```
+For example:
+```yaml
+image: "ocir.io/id9hokcxpkra/quickstart-mp:1.0"
+```
+Use `Esc` the quit insert mode and type `wq` to save changes and close the editor.
 
-    ![Oracle SSO](images/7.png)
+We will keep all Kubernetes artifacts in the separate namespace. Create a `hello-helidon` namespace for the Helidon quickstart-mp application. Namespaces are a way to organize clusters into virtual sub-clusters. We can have any number of namespaces within a cluster, each logically separated from others but with the ability to communicate with each other.
+Also we need to make Verrazzano aware that we store in that namespace Verrazzano artifacts. So we need to add a a label identifying the `hello-helidon` namespace as managed by Verrazzano. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users. Here, for the `hello-helidon` namespace, we are attaching a label to it, which marks this namespace as managed by Verrazzano. The *istio-injection=enabled*, enables an Istio "sidecar", and as such, helps establish an Istio proxy. With an Istio proxy, we can access other Istio services like an Istio gateway and such. To add the label to the bobs-books namespace with the previously mentioned attributes, copy the following command and run it in the Cloud Shell:
+```bash
+<copy>
+kubectl create namespace hello-helidon
+kubectl label namespace hello-helidon verrazzano-managed=true istio-injection=enabled
+</copy>
+```
 
-2. We will keep all Kubernetes artifacts in the separate namespace. Create a namespace for the Bob's Books example application. Namespaces are a way to organize clusters into virtual sub-clusters. We can have any number of namespaces within a cluster, each logically separated from others but with the ability to communicate with each other.
-Also we need to make Verrazzano aware that we store in that namespace Verrazzano artifacts. So we need to add a a label identifying the bobs-books namespace as managed by Verrazzano. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users. Here, for the bobs-book namespace, we are attaching a label to it, which marks this namespace as managed by Verrazzano. The *istio-injection=enabled*, enables an Istio "sidecar", and as such, helps establish an Istio proxy. With an Istio proxy, we can access other Istio services like an Istio gateway and such. To add the label to the bobs-books namespace with the previously mentioned attributes, copy the following command and run it in the *Cloud Shell*
+We have a Kuberneter cluster, *cluster1*, with three nodes. Now, we want to deploy Helidon quickstart-mp containerized application on *cluster1*. For this, we need a Kubernetes deployment configuration. This deployment instructs the Kubernetes to create and update instances for the Helidon quickstart-mp application. Here, we have the `hello-helidon-comp.yaml` file, which instructs Kubernetes. To deploy the Helidon quickstart-mp application, copy and paste the following two commands as shown. The `hello-helidon-comp.yaml` file contains definitions of various OAM components, where, an OAM component is a Kubernetes Custom Resource describing an application’s general composition and environment requirements.
+```bash
+<copy>kubectl apply -f ~/hello-helidon-comp.yaml</copy>
+```
 
-    ```bash
-    <copy>
-    kubectl create namespace bobs-books
-    kubectl label namespace bobs-books verrazzano-managed=true istio-injection=enabled
-    </copy>
-    ```
+The `hello-helidon-app.yaml` file is a Verrazzano application configuration file, which provides environment specific customizations.
+```bash
+<copy>kubectl apply -f ~/hello-helidon-app.yaml</copy>
+```
 
-    ![Verrazzano Home Folder](images/9.png)
+Wait for all of the pods in the Bob’s Books example application to be in the *Running* state. You may need to repeat this command several times before it is successful. The WebLogic Server and Coherence pods may take a while to be created and Ready. This *kubectl* command will wait for all the pods to be in the *Running* state within the bobs-books namespace. It takes around 4-5 minutes.
+```bash
+<copy>kubectl wait --for=condition=Ready pods --all -n hello-helidon --timeout=600s</copy>
+```
+When the pods are ready you can see similar response:
+```bash
+$ kubectl wait --for=condition=Ready pods --all -n hello-helidon --timeout=600s
+pod/hello-helidon-deployment-58fdd5cd4-94wjf condition met
+```
+You can also list the pods directly to check their status:
+```bash
+$ kubectl  get po -n hello-helidon
+NAME                                       READY   STATUS    RESTARTS   AGE
+hello-helidon-deployment-58fdd5cd4-94wjf   2/2     Running   0          34m
+```
 
-3. Copy the following command to download the script. This script authenticate the user for Oracle Container Registry. If authentication is successful, then it creates the docker registry secret. The Docker registry  is a way to store and version images, like GitHub for normal code but for containers (which Kubernetes can pull). Here, we will create a docker-registry secret to enable pulling the Bob's Books example image from the Oracle Container Registry. Click *Copy* on the following command, and paste it in any text editor of your choice and replace username and password with the email ID and password respectively which you used in step 1, for accepting the license agreement for downloading images from the Oracle Container Registry. Then, in the Cloud Shell, paste the modified command as shown:
+## Task 3: Verify the successful deployment of the Helidon quickstart-mp application
 
-    ```bash
-    <copy>
-    curl -LSs https://raw.githubusercontent.com/oracle/learning-library/master/developer-library/multicloud/verrazzano/deploy-bobsbook/create_secret.sh >~/create_secret.sh
-    chmod 777 create_secret.sh
-    ./create_secret.sh username password    
-    </copy>
-    ```
+As a first quick test check your `help/allGreetings` endpoint. To determine the URL which constructed from external/load balancer IP and application configuration execute the following command:
+```bash
+<copy>echo https://$(kubectl get gateway hello-helidon-hello-helidon-appconf-gw -n hello-helidon -o jsonpath={.spec.servers[0].hosts[0]})/help/allGreetings</copy>
+```
+This will print the proper URL to your REST endpoint, for example:
+```bash
+https://hello-helidon-appconf.hello-helidon.129.146.154.97.nip.io/help/allGreetings
+```
+You can use this link to test from browser, but keep in mind because of self signed certificates you need to accept risk and allow browser to continue the request processing.
+Probably it's easier to use `curl` because the response is only a string:
+```bash
+curl -k https://$(kubectl get gateway hello-helidon-hello-helidon-appconf-gw -n hello-helidon -o jsonpath={.spec.servers[0].hosts[0]})/help/allGreetings; echo
+```
 
-    ![Oracle Account](images/11.png)
-
-4. We need to create several Kubernetes secrets with credentials.  In the Bob's Books application, we have two WebLogic domains *bobby-front-end* and *bobs-bookstore*. The credentials for the WebLogic domain are kept in a Kubernetes Secret where the name of the secret is specified using *webLogicCredentialsSecret* in the WebLogic Domain resource. Also, the domain credentials secret must be created in the namespace where the domain will be running. We need to create the secrets called *bobbys-front-end-weblogic-credentials* and *bobs-bookstore-weblogic-credentials* used by WebLogic Server domains, with a user name value of `weblogic` and a password which is randomly generated in the bobs-books namespace. Our Bob's Books application uses a *mysql* database. So, we create a new secret called  *mysql-credentials*, with a user name value of `weblogic`, a password which is randomly generated,  and  JDBC URL, *jdbc:mysql://mysql.bobs-books.svc.cluster.local:3306/books* in the bobs-books namespace. We will use this values in the JDBC connection string in WebLogic DataSource object.
-Please copy and paste the block of commands into the *Cloud Shell*.
-
-    ```bash
-    <copy>
-    export WLS_USERNAME=weblogic
-    export WLS_PASSWORD=$((< /dev/urandom tr -dc 'A-Za-z0-9!"#$%&'\''()*+,-./:;<=>?@[\]^_`{|}~' | head -c10);(date +%S))
-    echo $WLS_PASSWORD
-    kubectl create secret generic bobbys-front-end-weblogic-credentials --from-literal=password=$WLS_PASSWORD --from-literal=username=$WLS_USERNAME -n bobs-books
-    kubectl create secret generic bobs-bookstore-weblogic-credentials --from-literal=password=$WLS_PASSWORD --from-literal=username=$WLS_USERNAME -n bobs-books
-    kubectl create secret generic mysql-credentials \
-        --from-literal=username=$WLS_USERNAME \
-        --from-literal=password=$WLS_PASSWORD \
-        --from-literal=url=jdbc:mysql://mysql.bobs-books.svc.cluster.local:3306/books \
-        -n bobs-books
-    cd    
-    </copy>
-    ```
-
-    ![mysql](images/12.png)
-
-5. We have a Kuberneter cluster, *cluster1*, with three nodes. Now, we want to deploy Bob's Books containerized application on *cluster1*. For this, we need a Kubernetes deployment configuration. This deployment instructs the Kubernetes to create and update instances for the Bob's Books application. Here, we have the `bobs-books-comp.yaml` file, which instructs Kubernetes. To deploy the Bob's Books application, copy and paste the following two commands as shown. The `bobs-books-comp.yaml` file contains definitions of various OAM components, where, an OAM component is a Kubernetes Custom Resource describing an application’s general composition and environment requirements. To learn more about the `bobs-books-comp.yaml` file, review Verrazzano Components in the Introduction section of this Lab 3.
-
-    ```bash
-    <copy>kubectl apply -f ~/bobs-books-comp.yaml</copy>
-    ```
-
-    ![app](images/20.png)
-
-6. The `bobs-books-app.yaml` file is a Verrazzano application configuration file, which provides environment specific customizations. To learn more about `bobs-books-app.yaml` file, review Verrazzano Application Configuration in the Introduction section of this Lab 3.
-
-    ```bash
-    <copy>kubectl apply -f ~/bobs-books-app.yaml</copy>
-    ```
-
-    ![app](images/21.png)
-
-7. Wait for all of the pods in the Bob’s Books example application to be in the *Running* state. You may need to repeat this command several times before it is successful. The WebLogic Server and Coherence pods may take a while to be created and Ready. This *kubectl* command will wait for all the pods to be in the *Running* state within the bobs-books namespace. It takes around 4-5 minutes.
-
-    ```bash
-    <copy>kubectl wait --for=condition=Ready pods --all -n bobs-books --timeout=600s</copy>
-    ```
-
-    ![Pods to be ready](images/22.png)
-
-8. Get the `EXTERNAL_IP` address of the istio-ingressgateway service. Copy this `EXTERNAL_IP` in your text editor; we will use it in many places, so you can directly copy it from your text editor.
-
-    ```bash
-    <copy>kubectl get service \
-    -n "istio-system" "istio-ingressgateway" \
-    -o jsonpath={.status.loadBalancer.ingress[0].ip}; echo</copy>
-    ```
-
-    ![External IP](images/23.png)
-
-## Task 3: Verify the successful deployment of the Bob's Book application
-
-Verify that the application configuration, domains, Coherence resources, and ingress trait all exist.
-
-1. To verify that the *Bob's Books* application is successfully deployed in the bobs-books namespace.
-
-    ```bash
-    <copy>kubectl get ApplicationConfiguration -n bobs-books</copy>
-    ```
-
-    ![Application Configuration](images/24.png)
-
-2. To verify that both WebLogic domains are created within the bobs-books namespace successfully.
-
-    ```bash
-    <copy>kubectl get Domain -n bobs-books</copy>
-    ```
-
-    ![WebLogic Domain](images/25.png)
-
-3. To verify that both Coherence clusters are created within the bobs-books namespace successfully.
-
-    ```bash
-    <copy>kubectl get Coherence -n bobs-books</copy>
-    ```
-
-    ![Coherence](images/29.png)
-
-4. To get the IngressTrait for the Bob's Book application, run the following command in the *Cloud Shell*.
-
-    ```bash
-    <copy>kubectl get IngressTrait -n bobs-books</copy>
-    ```
-
-    ![Ingress](images/26.png)
-
-5. Verify that the service pods are successfully created and transition to the *Running* state. Note that this may take a few minutes and that you may see some of the services terminate and restart. Finally, you will observe all the pods associated with the bobs-books namespace are in the *Running* Status. Please copy the pods details for the *bobbys-helidon-stock-application*.
-
-    ```bash
-    <copy>kubectl get pods -n bobs-books</copy>
-    ```
-
-    ```bash
-    YOURUSERNAME@cloudshell:~ (us-ashburn-1)$ kubectl get pods -n bobs-books
-    NAME                                                READY   STATUS    RESTARTS   AGE
-    bobbys-coherence-0                                  2/2     Running   0          11m
-    bobbys-front-end-adminserver                        4/4     Running   0          8m15s
-    bobbys-front-end-managed-server1                    4/4     Running   0          7m32s
-    bobbys-helidon-stock-application-77867fc8dd-wl8h5   2/2     Running   0          11m
-    bobs-bookstore-adminserver                          4/4     Running   0          7m59s
-    bobs-bookstore-managed-server1                      4/4     Running   0          7m14s
-    mysql-65d864bf8c-xf64p                              2/2     Running   0          10m
-    robert-helidon-bfdfb58b8-58qfs                      2/2     Running   0          11m
-    robert-helidon-bfdfb58b8-lkw8m                      2/2     Running   0          11m
-    roberts-coherence-0                                 2/2     Running   0          11m
-    roberts-coherence-1                                 2/2     Running   0          11m
-    YOURUSERNAME@cloudshell:~ (us-ashburn-1)$
-    ```
-
-    Note the pod name for **bobbys-helidon-stock-application**. When we redeploy this component, you will notice that this pod will go into a *Terminating* status and new pod will start and come in the *Running* state in Lab 7.
-
+You should get the same result what you got during the development:
+```yaml
+[Hello, Привет, Hola, Hallo, Ciao, Nǐ hǎo, Marhaba, Olá]
+```
 Leave the *Cloud Shell* open; we will use it for the next labs as well.
 
 ## Acknowledgements
 
-* **Author** -  Ankit Pandey
+* **Author** -  Peter Nagy
 * **Contributors** - Maciej Gruszka, Peter Nagy
-* **Last Updated By/Date** - Kamryn Vinson, July 2021
+* **Last Updated By/Date** - Peter Nagy, August 2021

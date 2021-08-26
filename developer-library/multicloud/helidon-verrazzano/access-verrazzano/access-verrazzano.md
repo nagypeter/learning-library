@@ -1,4 +1,4 @@
-# Access Bob's Book Application and Explore Verrazzano and Other Consoles
+# Explore Verrazzano and Other Consoles
 
 ## Introduction
 
