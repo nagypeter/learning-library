@@ -77,68 +77,14 @@ The *Quick Create* feature uses the default settings to create a *quick cluster*
 
     > Then, the new cluster is shown on the *Cluster Details* page. When the master nodes are created, the new cluster gains a status of *Active* (it takes about 7 minutes).Then, you may continue your labs.
 
-    ![cluster1](images/14.png)
+    ![cluster1](images/8.png)
 
-    ![cluster1](images/15.png)
+    ![cluster1](images/9.png)
 
-## Task 2: Configure `kubectl` (Kubernetes Cluster CLI)
-
-Oracle Cloud Infrastructure (OCI) Cloud Shell is a web browser-based terminal, accessible from the Oracle Cloud Console. The Cloud Shell provides access to a Linux shell, with a pre-authenticated Oracle Cloud Infrastructure CLI and other useful tools (*Git, kubectl, helm, OCI CLI*) to complete the Verrazzano tutorials. The Cloud Shell is accessible from the Console. Your Cloud Shell will appear in the Oracle Cloud Console as a persistent frame of the Console, and will stay active as you navigate to different pages of the Console.
-
-You will use the *Cloud Shell* to complete this workshop.
-
-We will use `kubectl` to manage the cluster remotely using the Cloud Shell. It needs a `kubeconfig` file. This will be generated using the OCI CLI which is pre-authenticated, so there’s no setup to do before you can start using it.
-
-1. Click *Access Cluster* on your cluster detail page.
-
-    > If you moved away from that page, then open the navigation menu and under *Developer Services*, select *Kubernetes Clusters (OKE)*. Select your cluster and go the detail page.
-
-    ![Access Cluster](images/8.png)
-
-    > A dialog is displayed from which you can open the Cloud Shell and contains the customized OCI command that you need to run, to create a Kubernetes configuration file.
-
-2. Leave the default *Cloud Shell Access* and first select the *Copy* link to copy the `oci ce...` command to the Cloud Shell.
-
-    ![Copy kubectl Config](images/9.png)
-
-3. Now, click *Launch Cloud Shell* to open the built in console. Then close the configuration dialog before you paste the command into the *Cloud Shell*.
-
-    ![Launch Cloud Shell](images/10.png)
-
-4. Copy the command from the clipboard (Ctrl+V or right click and copy) into the Cloud Shell and run the command.
-
-    For example, the command looks like the following:
-
-    ```bash
-    oci ce cluster create-kubeconfig --cluster-id ocid1.cluster.oc1.phx.aaaaaaaaaezwen..................zjwgm2tqnjvgc2dey3emnsd --file $HOME/.kube/config --region us-phoenix-1 --token-version 2.0.0
-    ```
-
-    ![kubectl config](images/11.png)
-
-5. Now check that `kubectl` is working, for example, using the `get node` command. you may need to run this command several times until you see the output similar to following.
-
-    ```bash
-    <copy>kubectl get node</copy>
-    ```
-
-    ```bash
-    $ kubectl get node
-    NAME          STATUS   ROLES   AGE    VERSION
-    10.0.10.112   Ready    node    4m32s   v1.20.8
-    10.0.10.200   Ready    node    4m32s   v1.20.8
-    10.0.10.36    Ready    node    4m28s   v1.20.8
-    ```
-
-    > If you see the node's information, then the configuration was successful.
-
-6. You can minimize and restore the terminal size at any time using the controls at the top right corner of the Cloud Shell.
-
-    ![cloud shell](images/13.png)
-
-Leave this *Cloud Shell* open; we will use it for further labs.
+Till the cluster is ready/active please continue the next Helidon application development lab.
 
 ## Acknowledgements
 
-* **Author** -  Ankit Pandey
+* **Author** -  Peter Nagy
 * **Contributors** - Maciej Gruszka, Peter Nagy
-* **Last Updated By/Date** - Kamryn Vinson, July 2021
+* **Last Updated By/Date** - Peter Nagy, August 2021

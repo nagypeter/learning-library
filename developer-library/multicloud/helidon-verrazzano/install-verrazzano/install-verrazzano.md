@@ -21,9 +21,9 @@ Verrazzano includes the following capabilities:
 
 In this lab, you will:
 
+* Open Cloud Shell and setup `kubectl` to use the Oracle Kubernetes Engine cluster
 * Install the Verrazzano platform operator.
 * Install the development (`dev`) profile of Verrazzano.
-* Verify the successful Verrazzano installation.
 
 ### Prerequisites
 
@@ -34,7 +34,63 @@ Verrazzano requires the following:
 
 In Lab 1, we created a Kubernetes cluster on the Oracle Cloud Infrastructure. We will use that Kubernetes cluster, *cluster1*, for installing the development profile of Verrazzano.
 
-## Task 1: Install the Verrazzano Platform Operator
+## Task 1: Configure `kubectl` (Kubernetes Cluster CLI)
+
+Oracle Cloud Infrastructure (OCI) Cloud Shell is a web browser-based terminal, accessible from the Oracle Cloud Console. The Cloud Shell provides access to a Linux shell, with a pre-authenticated Oracle Cloud Infrastructure CLI and other useful tools (*Git, kubectl, helm, OCI CLI*) to complete the Verrazzano tutorials. The Cloud Shell is accessible from the Console. Your Cloud Shell will appear in the Oracle Cloud Console as a persistent frame of the Console, and will stay active as you navigate to different pages of the Console.
+
+You will use the *Cloud Shell* to complete this workshop.
+
+We will use `kubectl` to manage the cluster remotely using the Cloud Shell. It needs a `kubeconfig` file. This will be generated using the OCI CLI which is pre-authenticated, so there’s no setup to do before you can start using it.
+
+1. Click *Access Cluster* on your cluster detail page.
+
+    > If you moved away from that page, then open the navigation menu and under *Developer Services*, select *Kubernetes Clusters (OKE)*. Select your cluster and go the detail page.
+
+    ![Access Cluster](images/1.png)
+
+    > A dialog is displayed from which you can open the Cloud Shell and contains the customized OCI command that you need to run, to create a Kubernetes configuration file.
+
+2. Leave the default *Cloud Shell Access* and first select the *Copy* link to copy the `oci ce...` command to the Cloud Shell.
+
+    ![Copy kubectl Config](images/2.png)
+
+3. Now, click *Launch Cloud Shell* to open the built in console. Then close the configuration dialog before you paste the command into the *Cloud Shell*.
+
+    ![Launch Cloud Shell](images/3.png)
+
+4. Copy the command from the clipboard (Ctrl+V or right click and copy) into the Cloud Shell and run the command.
+
+    For example, the command looks like the following:
+
+    ```bash
+    oci ce cluster create-kubeconfig --cluster-id ocid1.cluster.oc1.phx.aaaaaaaaaezwen..................zjwgm2tqnjvgc2dey3emnsd --file $HOME/.kube/config --region us-phoenix-1 --token-version 2.0.0
+    ```
+
+    ![kubectl config](images/4.png)
+
+5. Now check that `kubectl` is working, for example, using the `get node` command. you may need to run this command several times until you see the output similar to following.
+
+    ```bash
+    <copy>kubectl get node</copy>
+    ```
+
+    ```bash
+    $ kubectl get node
+    NAME          STATUS   ROLES   AGE    VERSION
+    10.0.10.112   Ready    node    4m32s   v1.20.8
+    10.0.10.200   Ready    node    4m32s   v1.20.8
+    10.0.10.36    Ready    node    4m28s   v1.20.8
+    ```
+
+    > If you see the node's information, then the configuration was successful.
+
+6. You can minimize and restore the terminal size at any time using the controls at the top right corner of the Cloud Shell.
+
+    ![cloud shell](images/5.png)
+
+Leave this *Cloud Shell* open; we will use it for further labs.
+
+## Task 2: Install the Verrazzano Platform Operator
 
 Verrazzano provides a platform [operator](https://kubernetes.io/docs/concepts/extend-kubernetes/operator/) to manage the life cycle of Verrazzano installations. You can install, uninstall, and update Verrazzano installations by updating the [Verrazzano custom resource](https://verrazzano.io/docs/reference/api/verrazzano/verrazzano/).
 
@@ -46,7 +102,7 @@ Before installing Verrazzano, we need to install the Verrazzano Platform Operato
     <copy>kubectl apply -f https://github.com/verrazzano/verrazzano/releases/download/v1.0.0/operator.yaml</copy>
     ```
 
-    ![verrazzano operator](images/1.png)
+    ![verrazzano operator](images/9.png)
 
     > This `operator.yaml` file contains information about the operator and the service accounts and custom resource definitions. By running this *kubectl apply* command, we are specifying whatever is in the `operator.yaml` file.
     > All deployments in Kubernetes happen in a namespace. When we deploy the Verrazzano Platform Operator, it happens in the namespace called "verrazzano-install".
@@ -57,7 +113,7 @@ Before installing Verrazzano, we need to install the Verrazzano Platform Operato
     <copy>kubectl -n verrazzano-install rollout status deployment/verrazzano-platform-operator</copy>
     ```
 
-    ![rollout status](images/2.png)
+    ![rollout status](images/10.png)
 
     > Confirm that the operator pod associated with the Verrazzano Platform Operator is correctly defined and running. A Pod is a unit which runs containers / images and Pods belong to nodes.
 
@@ -67,9 +123,9 @@ Before installing Verrazzano, we need to install the Verrazzano Platform Operato
     <copy>kubectl -n verrazzano-install get pods</copy>
     ```
 
-    ![running pod](images/3.png)
+    ![running pod](images/11.png)
 
-## Task 2: Installation of the Verrazzano development profile
+## Task 3: Installation of the Verrazzano development profile
 
 An installation profile is a well-known configuration of Verrazzano settings that can be referenced by name, which can then be customized as needed.
 
@@ -92,7 +148,7 @@ In this lab, we are going to install the *development profile of Verrazzano*, wh
 
 The following image describes the Verrazzano components that are installed with each profile.
 
-![Verrazzano Profile](images/4.png)
+![Verrazzano Profile](images/12.png)
 
 According to our DNS choice, we can use nip.io (wildcard DNS) or [Oracle OCI DNS](https://docs.cloud.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm). In this lab, we are going to install using nip.io (wildcard DNS).
 
@@ -112,7 +168,7 @@ An ingress controller is something that helps provide access to Docker container
     </copy>
     ```
 
-    ![wait for installation to complete](images/5.png)
+    ![wait for installation to complete](images/13.png)
 
     > It takes around 15 to 20 minutes to complete the installation.
 
@@ -124,43 +180,13 @@ An ingress controller is something that helps provide access to Docker container
 
     > The console log contains information about all the steps performed by the platform operator for installing Verrazzano, the components being installed, and the URLs we can use for accessing them.
 
-    ![view logs](images/6.png)
-    ![view logs](images/7.png)
+    ![view logs](images/14.png)
+    ![view logs](images/15.png)
 
-3. To verify the successful installation, copy the following command and paste it in the *Cloud Shell*. It checks for the condition, if *InstallComplete* condition is met, and notifies you. Here *my-verrazzano* is the name of the *Verrazzano Custom Resource*.
-
-    ```bash
-    <copy>kubectl wait --timeout=20m --for=condition=InstallComplete verrazzano/my-verrazzano</copy>
-    ```
-
-    ![wait for installation to complete](images/8.png)
-
-## Task 3: Verification of a successful Verrazzano installation
-
-Verrazzano installs multiple objects in multiple namespaces. Verrazzano components are installed in the namespace *verrazzano-system*.
-
-1. Please verify that all the pods associated with the multiple objects have a *Running* status.
-
-    ```bash
-    <copy>kubectl get pods -n verrazzano-system</copy>
-    ```
-
-    ![pods](images/9.png)
-
-    Verrazzano installs several consoles. The endpoints for an installation are stored in the `Status` field of the installed Verrazzano Custom Resource.
-
-2. To get the endpoints for these consoles, copy the following command and paste it in the *Cloud Shell* and look at the `Status.Instance` field:
-
-    ```bash
-    <copy>kubectl get vz -o yaml</copy>
-    ```
-
-    ![pods](images/10.png)
-
-Leave the *Cloud Shell* open; we need it for Lab 3.
+Leave the *Cloud Shell* open and let the installation running. Please continue with the next lab.
 
 ## Acknowledgements
 
-* **Author** -  Ankit Pandey
+* **Author** -  Peter Nagy
 * **Contributors** - Maciej Gruszka, Peter Nagy
-* **Last Updated By/Date** - Kamryn Vinson, July 2021
+* **Last Updated By/Date** - Peter Nagy, August 2021

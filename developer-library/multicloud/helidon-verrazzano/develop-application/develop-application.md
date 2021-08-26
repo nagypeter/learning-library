@@ -14,7 +14,7 @@ Helidon Reactive WebServer provides a modern functional programming model and ru
 
 With support for health checks, metrics, tracing and fault tolerance, Helidon has what you need to write cloud ready applications that integrate with Prometheus, Jaeger/Zipkin and Kubernetes.
 
-#### Helidon CLI
+### Helidon CLI
 
 The Helidon CLI lets you easily create a Helidon project by picking from a set of archetypes. It also supports a developer loop that performs continuous compilation and application restart, so you can easily iterate over source code changes.
 
@@ -48,7 +48,7 @@ PowerShell -Command Invoke-WebRequest -Uri "https://helidon.io/cli/latest/window
 For Windows you will also need the Visual C++ Redistributable Runtime. See ![Helidon on Windows](https://helidon.io/docs/v2/#/about/04_windows) for more information.
 
 
-## Create Helidon Greeting App
+## Task 2: Create Helidon Greeting App
 In your console type:
 ```bash
 helidon init
@@ -68,7 +68,7 @@ Helidon flavor
 Enter selection (Default: 1): 2
 ```
 
-To have more functionality from the very beginning let us choose option **(2) quickstart**, then just press **Enter** for the default answers. This will be enough.
+To have more functionality from the very beginning let us choose option **(2) quickstart**, then just press **Enter** for the default answers. This will be enough. Please note you can have different default package and project group name because it uses the os user name.
 
 ```bash
 Select archetype
@@ -125,7 +125,7 @@ quickstart-mp
 
 ```
 
-## Task 2: Run locally the Helidon Greeting App
+## Task 3: Run locally the Helidon Greeting App
 
 With JDK11+
 ```bash
@@ -167,7 +167,7 @@ curl -H 'Accept: application/json' -X GET http://localhost:8080/metrics
 
 ```
 
-## Task 2: Modify the app
+## Task 4: Modify the app
 
 Ok, let us modify our application. Let us open our favourite IDE and find **microprofile-config.properties** file.
 
@@ -217,29 +217,33 @@ Let us create a new end point, that provides help for different greeting in diff
 Just create a new class **GreetHelpResource** with the following code:
 
 ```java
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Logger;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+
+import org.eclipse.microprofile.metrics.annotation.Counted;
+
 @ApplicationScoped
 @Path("/help")
 public class GreetHelpResource {
+
+	Logger LOGGER = Logger.getLogger(GreetHelpResource.class.getName());
 
     @GET
     @Path("/allGreetings")
     @Counted(name = "helpCalled", description = "How many time help was called")
     public String getAllGreetings(){
+    	LOGGER.info("Help requested!");
         return Arrays.toString(List.of("Hello","Привет","Hola","Hallo","Ciao","Nǐ hǎo", "Marhaba","Olá").toArray());
     }
 }
 ```
 
 The class has only one method *getAllGreetings* which returns a list with greetings in different languages.
-
-For the `logger` we also need to include the `slf4j` dependency:
-
-```xml
-<dependency>
-    <groupId>org.slf4j</groupId>
-    <artifactId>slf4j-jdk14</artifactId>
-</dependency>
-```
 
 Now as we build and run the application:
 
@@ -282,64 +286,10 @@ This easy we can add a new endpoint!
 
 So, working with Helidon and its tooling is really easy and fast!
 
+Please leave your terminal/cmd open and continue with Verrazzano installation lab.
 
-## Task 3: Build the Docker Image
+## Acknowledgements
 
-Ok, let us now prepare the Docker image that we will in Verrazzano. Just type in the console pointing to the root of the project:
-
-
-```bash
-docker build -t quickstart-mp .
-```
-
-This will build the image. We can check if it is available in the local repo:
-
-```bash
-docker images             
-
-REPOSITORY                                         TAG       IMAGE ID       CREATED              SIZE
-quickstart-mp                                      latest    ea16d2de340a   About a minute ago   236MB
-
-```
-
-### Start the application with Docker
-
-We can now our application in Docker:
-
-```
-docker run --rm -p 8080:8080 quickstart-mp:latest
-```
-
-Exercise the application as described earlier:
-
-```bash
-curl -X GET http://localhost:8080/greet
-{"message":"Hello World!"}
-
-curl -X GET http://localhost:8080/greet/Joe
-{"message":"Hello Joe!"}
-
-curl -X PUT -H "Content-Type: application/json" -d '{"greeting" : "Hola"}' http://localhost:8080/greet/greeting
-
-curl -X GET http://localhost:8080/greet/Jose
-{"message":"Hola Jose!"}
-
-curl -s -X GET http://localhost:8080/health
-{"outcome":"UP",...
-. . .
-
-# Prometheus Format
-curl -s -X GET http://localhost:8080/metrics
-# TYPE base:gc_g1_young_generation_count gauge
-. . .
-
-# JSON Format
-curl -H 'Accept: application/json' -X GET http://localhost:8080/metrics
-{"base":...
-. . .
-
-```
-
-We have absolutely the same functionality, but this time our application runs inside Docker container.
-
-Stop the running container.
+* **Author** -  Dmitry Aleksandrov
+* **Contributors** - Maciej Gruszka, Peter Nagy
+* **Last Updated By/Date** - Peter Nagy, August 2021

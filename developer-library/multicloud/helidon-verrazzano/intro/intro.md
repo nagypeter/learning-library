@@ -16,7 +16,7 @@ This workshop should be as self explanatory as possible. So your job is to follo
 
 ## About Product/Technology
 
-### Helidon
+## Helidon
 Helidon is a open source microservices framework introduced by Oracle. Helidon is a collection of Java libraries designed for creating lightweight and fast microservices-based applications. The framework supports two programming models for writing microservices: Helidon SE and Helidon MP.
 While Helidon SE is designed to be a microframework that supports the reactive programming model, Helidon is an implementation of the MicroProfile specification. Since MicroProfile has its roots in Java EE, the MicroProfile APIs follow a familiar, declarative approach with heavy use of annotations. This makes it a good choice for Java EE developers.
 The MicroProfile features aim at the implementation of microservices. You can find APIs for defining REST Clients, monitoring the application, reading technical and functional statistics and for configuring the application.
@@ -24,7 +24,7 @@ Helidon has also  added additional APIs to the core set of Microprofile APIs giv
 
 > The [MicroProfile](https://microprofile.io/) standard builds on Jakarta EE. Like Jakarta EE MicroProfile is open source as well and is developed by the Eclipse Foundation. As with Jakarta EE, implementation with MicroProfile takes place in the libraries or application servers implementing the standard.
 
-### Verrazzano
+## Verrazzano
 Verrazzano is an end-to-end enterprise container platform for deploying cloud-native and traditional applications in multicloud and hybrid environments. It is made up of a curated set of open source components – many that you may already use and trust, and some that were written specifically to pull together all of the pieces that make Verrazzano a cohesive and easy to use platform.
 
 Verrazzano includes the following capabilities:
