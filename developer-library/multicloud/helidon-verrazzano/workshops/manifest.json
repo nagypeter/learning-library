@@ -32,7 +32,7 @@
             "filename": "../deploy-app-on-verrazzano/deploy-app-on-verrazzano.md"
         },
 		    {
-            "title": "Lab 6: Modifying the Application component and Creation of new image",
+            "title": "Lab 6: Access the application, explore Verrazzano and monitor the application",
             "filename": "../access-application/access-application.md"
         },
         {
