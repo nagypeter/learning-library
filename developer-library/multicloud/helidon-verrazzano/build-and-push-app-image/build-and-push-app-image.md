@@ -23,7 +23,7 @@ In this lab, you will:
 
 Now prepare the Docker image that you will deploy on Verrazzano.
 
-We are creating a Docker image, which we will upload to Oracle Cloud Container Registry belongs to your OCI. To do so you need to create image name which reflects your registry coordinates. You need the following information:
+We are creating a Docker image, which you will upload to Oracle Cloud Container Registry belongs to your OCI account. To do so you need to create image name which reflects your registry coordinates. You need the following information:
 
 * Tenancy Namespace
 * End point for the Region
@@ -47,6 +47,7 @@ Now you have both the Tenancy Namespace and Endpoint for your region. Copy the f
 ```
 The build will produce similar result:
 ```bash
+$ docker build iad.ocir.io/id9hokcxpkra/quickstart-mp:1.0 .
 > docker pull iad.ocir.io/id9hokcxpkra/quickstart-mp:1.0
 [+] Building 107.5s (19/19) FINISHED                                                                                                            
  => [internal] load build definition from Dockerfile                                                                                       0.1s
@@ -88,8 +89,6 @@ The build will produce similar result:
  => => naming to iad.ocir.io/weblogick8s/quickstart-mp:1.0                                                                                 0.0s
 
 Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
-quickstart-mp ()$
-
 ```
 This creates the Docker image, what you can check in your local repository.
 

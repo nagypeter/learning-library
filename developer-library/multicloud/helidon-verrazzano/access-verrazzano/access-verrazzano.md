@@ -1,216 +1,292 @@
-# Explore Verrazzano and Other Consoles
+# Explore Verrazzano and Consoles
 
 ## Introduction
 
-In Lab 3, we deployed the Bob's Book application. In this lab, we will access the application and verify that it is working. Later, we will explore the Verrazzano and Grafana consoles.
+You deployed the Helidon quickstart-mp application. In this lab, we will access the application and verify using multiple management tools.
+
+### Grafana
+
+Grafana is an open source solution for running data analytics, pulling up metrics that make sense of the massive amount of data & to monitor our apps with the help of nice customizable dashboards. The tool helps to study, analyse & monitor data over a period of time, technically called time series analytics.
+Useful to track the user behaviour, application behaviour, frequency of errors popping up in production or a pre-prod environment, type of errors popping up and the contextual scenarios by providing relative data.
+
+[https://grafana.com/grafana/](https://grafana.com/grafana/)
+
+### Kibana
+
+Kibana is a frontend application that sits on top of the Elastic Stack, providing search and data visualization capabilities for data indexed in Elasticsearch. Verrazzano uses Elasticsearch to store applications log entries.
+
+[https://www.elastic.co/kibana/](https://www.elastic.co/kibana/)
+
+### Prometheus
+
+Prometheus is a monitoring and alerting toolkit. Prometheus collects and stores its metrics as time series data, i.e. metrics information is stored with the timestamp at which it was recorded, alongside optional key-value pairs called labels.
+
+[https://prometheus.io/](https://prometheus.io/)
+
+### Rancher
+
+Rancher is a platform that enables Verrazzano to run containers on multiple Kubernetes clusters in production. It enables hybrid which means single pane of glass management of on-prem clusters and hosted on cloud services like.
+
+[https://rancher.com/](https://rancher.com/)
 
 ### Objectives
 
 In this lab, you will:
 
-* Access the Bob's Book application.
 * Explore the Verrazzano console.
 * Explore the Grafana console.
+* Explore the Kibana console.
+* Explore the Prometheus console.
+* Explore the Rancher console.
 
 ### Prerequisites
 
-* Run Lab 1, which creates an OKE Cluster on the Oracle Cloud Infrastructure.
-* Run Lab 2, which installs Verrazzano on a Kubernetes cluster.
-* Run Lab 3, which deploys the Bob's Book application.
-* You should have a text editor, where you can paste the commands and URLs and modify them, as per your environment. Then you can copy and paste the modified commands for running them in the *Cloud Shell*.
+* Running Kubernetes (OKE) Cluster on the Oracle Cloud Infrastructure.
+* Verrazzano installed on a Kubernetes (OKE) cluster.
+* Deployed Helidon quickstart-mp application.
 
-## Task 1: Access the Bob's Book application
 
-1. We need an `EXTERNAL_IP` address through which we can access the Bob's Book application. To get the `EXTERNAL_IP` address of the istio-ingressgateway service, copy the following command and paste it in the *Cloud Shell*.
-
-      ```bash
-      <copy> kubectl get service \
-      -n "istio-system" "istio-ingressgateway" \
-      -o jsonpath={.status.loadBalancer.ingress[0].ip}; echo</copy>
-      ```
-
-   ![hostName](images/1.png)
-
-2. To open the Robert's Book Store Home Page, copy the following URL and replace *XX.XX.XX.XX* with your *EXTERNAL_IP* address which we got in the last step, as shown in the following image.
-
-      ```bash
-      <copy>https://bobs-books.bobs-books.XX.XX.XX.XX.nip.io/</copy>
-      ```
-
-   ![Roberts Books Page](images/2.png)
-
-3. Click *Advanced*, as shown:
-
-   ![Advanced](images/3.png)
-
-4. Select *Proceed to bobs-books.bobs-books. EXTERNAL_IP .nip.io(unsafe)* to access the application.
-
-   ![Unsafe access](images/4.png)
-
-   ![Robert Bookstore](images/5.png)
-
-5. To open the Bob's Book Store Home page, open a new tab and copy the following URL and replace *XX.XX.XX.XX* with your `EXTERNAL_IP` address, as shown in the following image.
-
-      ```bash
-      <copy>https://bobs-books.bobs-books.XX.XX.XX.XX.nip.io/bobbys-front-end/</copy>
-      ```
-
-   ![Bobs bookstore](images/6.png)
-
-   ![Bob bookstore](images/7.png)
-
-   > Leave this page open  because we will use it in Lab 8.
-
-6. To open the Bob's Book Order Manager UI, open a new tab and copy the following URL and replace *XX.XX.XX.XX* with your *EXTERNAL_IP* address as shown in the following image.
-
-      ```bash
-      <copy>https://bobs-books.bobs-books.XX.XX.XX.XX.nip.io/bobs-bookstore-order-manager/orders</copy>
-      ```
-
-   ![order manager](images/8.png)
-
-7. Go Back to the *Bob's Books* page and let's purchase a book. Click *Books* as shown in the following image.
-
-   ![Check out order](images/38.png)
-
-8. Select the image for the *Twilight* Book, as shown in the following image.
-
-   ![Purchase book](images/39.png)
-
-9. First, click *Add to cart* and then *Checkout* as shown in the following image.
-
-   ![Purchase book](images/40.png)
-
-10. Enter the details for purchasing the book. For *Your State*, enter your two digit state code and then click *Submit Order*.
-
-   ![Purchase book](images/42.png)
-11. Go back to the *Order Manager* page and select the *Refresh* button to check if your order is successfully recorded in the order manager.
-
-   ![Verify Order](images/11.png)
-
-## Task 2: Explore the Verrazzano Console
+## Task 1: Explore the Verrazzano Console
 
 Verrazzano installs several consoles. The endpoints for an installation are stored in the `Status` field of the installed Verrazzano Custom Resource.
 
-1. You can get the endpoints for these consoles by using the following command and looking at the `Status.Instance` field:
+To get the endpoints for these consoles, copy the following command and paste it in the *Cloud Shell* and look at the `Status.Instance` field:
 
-      ```bash
-      <copy>kubectl get vz -o yaml</copy>
-      ```
+```bash
+<copy>kubectl get vz -o yaml</copy>
+```
 
-   ![Console URL](images/12.png)
+```bash
+$ kubectl get vz -o yaml
+apiVersion: v1
+items:
+- apiVersion: install.verrazzano.io/v1alpha1
+  kind: Verrazzano
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"install.verrazzano.io/v1alpha1","kind":"Verrazzano","metadata":{"annotations":{},"name":"my-verrazzano","namespace":"default"},"spec":{"profile":"dev"}}
+    creationTimestamp: "2021-08-23T15:19:23Z"
+    finalizers:
+    - install.verrazzano.io
+    generation: 2
+    managedFields:
+    - apiVersion: install.verrazzano.io/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:spec:
+          .: {}
+          f:profile: {}
+      manager: kubectl
+      operation: Update
+      time: "2021-08-23T15:19:23Z"
+    - apiVersion: install.verrazzano.io/v1alpha1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:finalizers: {}
+        f:spec:
+          f:components:
+            .: {}
+            f:fluentd:
+              .: {}
+              f:extraVolumeMounts: {}
+          f:security: {}
+        f:status:
+          .: {}
+          f:conditions: {}
+          f:instance:
+            .: {}
+            f:consoleUrl: {}
+            f:elasticUrl: {}
+            f:grafanaUrl: {}
+            f:keyCloakUrl: {}
+            f:kibanaUrl: {}
+            f:prometheusUrl: {}
+            f:rancherUrl: {}
+          f:state: {}
+          f:version: {}
+      manager: verrazzano-platform-operator
+      operation: Update
+      time: "2021-08-23T15:30:06Z"
+    name: my-verrazzano
+    namespace: default
+    resourceVersion: "49073970"
+    selfLink: /apis/install.verrazzano.io/v1alpha1/namespaces/default/verrazzanos/my-verrazzano
+    uid: c37cc781-1d16-4aa9-8e08-7111d786fe51
+  spec:
+    components:
+      fluentd:
+        extraVolumeMounts:
+        - source: /u01/data/docker/containers/
+    profile: dev
+    security: {}
+  status:
+    conditions:
+    - lastTransitionTime: "2021-08-23T15:19:24Z"
+      message: Verrazzano install in progress
+      status: "True"
+      type: InstallStarted
+    - lastTransitionTime: "2021-08-23T15:30:05Z"
+      message: Verrazzano install completed successfully
+      status: "True"
+      type: InstallComplete
+    instance:
+      consoleUrl: https://verrazzano.default.129.146.228.44.nip.io
+      elasticUrl: https://elasticsearch.vmi.system.default.129.146.228.44.nip.io
+      grafanaUrl: https://grafana.vmi.system.default.129.146.228.44.nip.io
+      keyCloakUrl: https://keycloak.default.129.146.228.44.nip.io
+      kibanaUrl: https://kibana.vmi.system.default.129.146.228.44.nip.io
+      prometheusUrl: https://prometheus.vmi.system.default.129.146.228.44.nip.io
+      rancherUrl: https://rancher.default.129.146.228.44.nip.io
+    state: Ready
+    version: 1.0.0
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+```
 
-   This results in output similar to the following (output abbreviated to show only the relevant portions). Click the links to open the *Verrazzano* Console as shown:
+Use the `https://verrazzano.default.YOUR_UNIQUE_IP.nip.io` to open the Verrazzano console.
 
-   ![Verrazzano Console](images/13.png)
+Verrazzano *dev* profile use self signed certificate so you need to click *Advanced* to accept risk and skip warning.
 
-2. Click *Advanced*.
+![Advanced](images/1.png)
 
-   ![Advanced](images/14.png)
+Select *Proceed to verrazzano default XX.XX.XX.XX.nip.io(unsafe)*.
 
-3. Select *Proceed to verrazzano default XX.XX.XX.XX.nip.io(unsafe)*.
+![Proceed](images/2.png)
 
-   ![Proceed](images/15.png)
+Because it redirects to the Keycloak console  URL for authentication, again on this page, click *Advanced*.
 
-4. Because it redirects to the Keycloak console  URL for authentication, again on this page, click *Advanced*.
+![Keycloak Authentication](images/3.png)
 
-   ![Keycloak Authentication](images/16.png)
+Select *Proceed to Keycloak default XX.XX.XX.XX.nip.io(unsafe)*.
 
-5. Select *Proceed to Keycloak default XX.XX.XX.XX.nip.io(unsafe)*.
+![Proceed](images/4.png)
 
-   ![Proceed](images/17.png)
+Now we need the user name and password for the Verrazzano console. *Username* is *verrazzano* and to find out the password, go back to the *Cloud Shell* and paste the following command to find out the password for the *Verrazzano Console*.
 
-6. Now we need the user name and password for the Verrazzano console. *Username* is *verrazzano* and to find out the password, go back to the *Cloud Shell* and paste the following command to find out the password for the *Verrazzano Console*.
+```bash
+<copy>kubectl get secret --namespace verrazzano-system verrazzano -o jsonpath={.data.password} | base64 --decode; echo</copy>
+```
 
-      ```bash
-      <copy>kubectl get secret --namespace verrazzano-system verrazzano -o jsonpath={.data.password} | base64 --decode; echo</copy>
-      ```
+Copy the password and go back to the browser, where the *Verrazzano Console* is open. Paste the password in the *Password* field and enter *verrazzano* as *Username* and then click *Sign In*.
 
-   ![Verrazzano Password](images/18.png)
+![SignIn](images/5.png)
 
-7. Copy the password and go back to the browser, where the *Verrazzano Console* is open.
+In the Home Page of the Verrazzano Console, you can see *System Telemetry* and because we installed the *Development Profile* of Verrazzano, you can see it in the *General Information* section. You can see the Helidon quickstart-mp application under *OAM Applications*. Select *hello-helidon-appconf* to view components of this application.
 
-   ![Verrazzano login](images/36.png)
+![Home Page](images/6.png)
 
-8. Paste the password in the *Password* field and enter *verrazzano* as *Username* and then click *Sign In*.
+There is only one component for this application as you can see under *Components*. To explore the configuration click the **OAM Component Ref:** *hello-helidon-component* component as shown:
 
-   ![SignIn](images/19.png)
+![hello-helidon](images/7.png)
 
-   In the Home Page of the Verrazzano Console, you can see *System Telemetry* and because we installed the *Development Profile* of Verrazzano, you can see it in the *General Information* section.
+You can see *General Information* for this component. To learn about the *Workload Spec*, select *hello-helidon-component* as shown:
 
-   ![Home Page](images/20.png)
+![Workload spec](images/8.png)
 
-9. Because we have deployed the Bob's Book application, you can see it under *OAM Applications*. Select *bobs-books* to view different components of this application.
+Here you can see the configuration details for the *hello-helidon-component* component. Click *Close*.
 
-   ![Components](images/21.png)
+![configuration](images/9.png)
 
-   There are 10 components for this application as you can see under *Components*.
+## Task 2: Explore the Grafana Console
 
-10. To explore the configuration for a particular component, first select the *Sort by* drop-down menu and select *Name*, then select the *bobby-coh* component as shown:
+Select *Home* to go back to Verrazzano Console Home Page.
 
-    ![bobs-coh](images/22.png)
+![Home](images/10.png)
 
-11. You can see *General Information* for this component. To learn about the *Workload Spec*, select *bobby-coh* as shown:
+On the home page, you'll see the link for opening the *Grafana console*. Select the link for the *Grafana Console* as shown:
 
-    ![Workload spec](images/23.png)
+![Grafana Home](images/11.png)
 
-12. Here you can see the configuration details for the *bobby-coh* component. Click *Close*.
+Click *Advanced*.
 
-    ![configuration](images/24.png)
+![Advanced](images/12.png)
 
-## Task 3: Explore the Grafana Console
+Select *grafana.vmi.system.default.XX.XX.XX.XX.nip.io(unsafe)*.
 
-1. Select *Home* to go back to Verrazzano Console Home Page.
+![proceed](images/13.png)
 
-    ![Home](images/25.png)
+The Grafana Home Page opens. Select *Home*  at the top left.
 
-2. In this page, you'll see the link for opening the *Grafana console*. Select the link for the *Grafana Console* as shown:
+![Home](images/14.png)
 
-    ![Grafana Home](images/26.png)
+Type *Helidon* and you will see *Helidon Monitoring Dashboard* under *General*. Click *Helidon Monitoring Dashboard*.
 
-3. Click *Advanced*.
+![Helidon dashboard](images/15.png)
 
-    ![Advanced](images/27.png)
+Here you can observe the JVM details of the Helidon quickstart-mp application. Like Status, Heap Usage, Running Time, JVM Heap, Thread Count, HTTP Requests, etc. This is a prebuilt dashboard specifically for Helidon workloads. Of course you can customize this dashboard according to your needs and add custom diagnostics information.
 
-4. Select *grafana.vmi.system.default.XX.XX.XX.XX.nip.io(unsafe)*.
+![Dashboard](images/16.png)
 
-    ![proceed](images/28.png)
+## Task 3: Explore the Kibana Console
 
-5. The Grafana Home Page opens. Select *Home*  at the top left.
+Go back to the Verrazzano home page and select Kibana console.
 
-    ![Home](images/29.png)
+![Kibana link](images/17.png)
 
-6. Type *WebLogic* and you will see *WebLogic Server Dashboard* under *General*. Select *WebLogic Server Dashboard*.
+Select the *Proceed to ... default XX.XX.XX.XX.nip.io(unsafe)* if necessary.
+On the Kibana homepage click the Discover link or its shortcut menu icon on the left side.
 
-    ![WebLogic](images/30.png)
+![Kibana dashboard click](images/18.png)
 
-    Here you can observe the two domains under *Domain* and Running Servers, Deployed Applications, Server Name and their Status, Heap Usage, Running Time, JVM Heap. If your application has resources like JDBC and JMS, you can also get details about it here.
+In order to find log entry in Elasticsearch first you need to define index pattern. Type *verrazzano-namespace-hello-helidon* in the **Index Pattern**. Select the the result from the list below and click **Next**.
 
-    ![Dashboard](images/31.png)
+![Index pattern](images/19.png)
 
-7. Now, select WebLogic Server Dashboard and type *Helidon* and you will see *Helidon Monitoring Dashboard*. Select *Helidon Monitoring Dashboard*.
+On the next page select *@timestamp* as **Time Filter field name** and click **Create Index pattern**.
 
-    ![Helidon](images/32.png)
+![Index pattern](images/20.png)
 
-    Here you can see various details like the *Status* of your application and its *Uptime*, Garbage Collector, and Mark Sweep Total and its Time, Thread Count.
+Type the custom log entry value you created in the Helidon application: *Help requested* into the filter textbox. Hit **Enter** or click **Refresh**. You should get at least one result. If you haven't hit the application endpoint or that happened long time ago simply invoke again the following HTTP request in Cloud Shell against your endpoint. You can execute multiple times.
+```bash
+<copy>curl -k https://$(kubectl get gateway hello-helidon-hello-helidon-appconf-gw -n hello-helidon -o jsonpath={.spec.servers[0].hosts[0]})/help/allGreetings; echo</copy>
+```
 
-    ![Helidon Dashboard](images/33.png)
+![Log result](images/21.png)
 
-8. Now, select Helidon Monitoring Dashboard and type *Coherence* and you will see *Coherence Dashboard Main*. Select *Coherence Dashboard Main*.
+## Task 4: Explore the Prometheus Console
 
-    ![Coherence](images/34.png)
+Go back to the Verrazzano home page and select Prometheus console.
 
-9. Here you can see the details of the *Coherence Cluster*. For the Bob's Books application, we have two Coherence clusters, one for Bob's Books and another for Robert's Books. You need to select the drop-down menu for *Cluster Name* to view both the clusters.
+![Prometheus link](images/22.png)
 
-    ![Dashboard](images/35.png)
-    ![Dashboard](images/37.png)
+Select the *Proceed to ... default XX.XX.XX.XX.nip.io(unsafe)* if necessary.
+On the Prometheus dashboard page type *help* into the search field and select your custom metric *application_me_pnagy_mp_quickstart_GreetHelpResource_helpCalled_total*.
 
+![Prometheus execute](images/23.png)
 
+Click **Execute** and check the result below. You should see your metric's current value which means how many request was completed by your endpoint. You can also switch to *Graph* view instead of the *Console* mode.
 
-Leave the *Cloud Shell* open; we will use it for upcoming labs.
+![Prometheus value](images/24.png)
+
+You can also add another metric to your dashboard. Discover the available, default metrics in the list.
+
+## Task 5: Explore the Rancher Console
+
+Go back to the Verrazzano home page and select Rancher console.
+
+![Rancher link](images/25.png)
+
+Select the *Proceed to ... default XX.XX.XX.XX.nip.io(unsafe)* if necessary.
+Rancher requires separate credential. In Verrazzano `dev` profile the username is *admin*. To get the password execute the following command in Cloud Shell which extracts from the proper secret configuration:
+```bash
+<copy>kubectl get secret --namespace cattle-system rancher-admin-secret -o jsonpath={.data.password} | base64 --decode; echo</copy>
+```
+Using the values above login to the Rancher console.
+
+![Rancher login](images/26.png)
+
+TODO - could not login
 
 ## Acknowledgements
 
 * **Author** -  Ankit Pandey
 * **Contributors** - Maciej Gruszka, Peter Nagy
-* **Last Updated By/Date** - Kamryn Vinson, July 2021
+* **Last Updated By/Date** - Peter Nagy, August 2021

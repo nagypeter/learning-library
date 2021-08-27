@@ -28,21 +28,27 @@ You should make sure java and `mvn` are in your path.
 ## Task 1: Helidon CLI Installation
 MacOS:
 ```bash
+<copy>
 curl -O https://helidon.io/cli/latest/darwin/helidon
 chmod +x ./helidon
 sudo mv ./helidon /usr/local/bin/
+</copy>
 ```
 
 Linux:
 ```bash
+<copy>
 curl -O https://helidon.io/cli/latest/linux/helidon
 chmod +x ./helidon
 sudo mv ./helidon /usr/local/bin/
+</copy>
 ```
 
 Windows:
 ```PowerShell
+<copy>
 PowerShell -Command Invoke-WebRequest -Uri "https://helidon.io/cli/latest/windows/helidon.exe" -OutFile "C:\Windows\system32\helidon.exe"
+</copy>
 ```
 
 For Windows you will also need the Visual C++ Redistributable Runtime. See ![Helidon on Windows](https://helidon.io/docs/v2/#/about/04_windows) for more information.
@@ -51,7 +57,7 @@ For Windows you will also need the Visual C++ Redistributable Runtime. See ![Hel
 ## Task 2: Create Helidon Greeting App
 In your console type:
 ```bash
-helidon init
+<copy>helidon init</copy>
 ```
 
 Then answer the questions.
@@ -129,13 +135,15 @@ quickstart-mp
 
 With JDK11+
 ```bash
+<copy>
 mvn package
 java -jar target/quickstart-mp.jar
+</copy>
 ```
 
 ### Exercise the application
 
-```
+```bash
 curl -X GET http://localhost:8080/greet
 {"message":"Hello World!"}
 
@@ -150,7 +158,7 @@ curl -X GET http://localhost:8080/greet/Jose
 
 ### Try health and metrics
 
-```
+```bash
 curl -s -X GET http://localhost:8080/health
 {"outcome":"UP",...
 . . .
@@ -176,7 +184,7 @@ Ok, let us modify our application. Let us open our favourite IDE and find **micr
 In the console, in the folder of the project, type:
 
 ```bash
-helidon dev
+<copy>helidon dev</copy>
 ```
 
 This will start the **Development loop** we've mentioned earlier.
@@ -184,7 +192,7 @@ This will start the **Development loop** we've mentioned earlier.
 Now change the property *app.greeting* to "Hello Oracle" for example.
 
 ```properties
-app.greeting=Hello Oracle
+<copy>app.greeting=Hello Oracle</copy>
 ```
 
 ![HelidonDev](images/2.jpg)
@@ -194,7 +202,7 @@ You will see that whenever we change any file, the **Helidon CLI** recognizes th
 Now if you type in your console:
 
 ```bash
-curl -X GET http://localhost:8080/greet
+<copy>curl -X GET http://localhost:8080/greet</copy>
 ```
 
 The result is expected to be:
@@ -217,6 +225,7 @@ Let us create a new end point, that provides help for different greeting in diff
 Just create a new class **GreetHelpResource** with the following code:
 
 ```java
+<copy>
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -241,6 +250,7 @@ public class GreetHelpResource {
         return Arrays.toString(List.of("Hello","Привет","Hola","Hallo","Ciao","Nǐ hǎo", "Marhaba","Olá").toArray());
     }
 }
+</copy>
 ```
 
 The class has only one method *getAllGreetings* which returns a list with greetings in different languages.
@@ -248,15 +258,19 @@ The class has only one method *getAllGreetings* which returns a list with greeti
 Now as we build and run the application:
 
 ```bash
+<copy>
 mvn package
 java -jar target/quickstart-mp.jar
+</copy>
 ```
 
 And as we do curl:
 
 ```bash
-curl http://localhost:8080/help/allGreetings
-
+<copy>curl http://localhost:8080/help/allGreetings</copy>
+```
+The expected result:
+```bash
 [Hello, Привет, Hola, Hallo, Ciao, Nǐ hǎo, Marhaba, Olá]
 ```
 

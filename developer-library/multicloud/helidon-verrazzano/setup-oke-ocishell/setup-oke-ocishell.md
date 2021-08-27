@@ -85,6 +85,6 @@ Till the cluster is ready/active please continue the next Helidon application de
 
 ## Acknowledgements
 
-* **Author** -  Peter Nagy
+* **Author** -  Ankit Pandey
 * **Contributors** - Maciej Gruszka, Peter Nagy
 * **Last Updated By/Date** - Peter Nagy, August 2021

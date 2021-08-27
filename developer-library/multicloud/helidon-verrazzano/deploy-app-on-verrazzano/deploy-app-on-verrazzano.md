@@ -159,109 +159,6 @@ vmi-system-prometheus-0-84897fb854-sgvr4           4/4     Running   0          
 weblogic-operator-786b8db578-gtf54                 2/2     Running   0          47min
 ```
 
-Verrazzano installs several consoles. The endpoints for an installation are stored in the `Status` field of the installed Verrazzano Custom Resource.
-
-To get the endpoints for these consoles, copy the following command and paste it in the *Cloud Shell* and look at the `Status.Instance` field:
-
-```bash
-<copy>kubectl get vz -o yaml</copy>
-```
-
-```bash
-$ kubectl get vz -o yaml
-apiVersion: v1
-items:
-- apiVersion: install.verrazzano.io/v1alpha1
-  kind: Verrazzano
-  metadata:
-    annotations:
-      kubectl.kubernetes.io/last-applied-configuration: |
-        {"apiVersion":"install.verrazzano.io/v1alpha1","kind":"Verrazzano","metadata":{"annotations":{},"name":"my-verrazzano","namespace":"default"},"spec":{"profile":"dev"}}
-    creationTimestamp: "2021-08-23T15:19:23Z"
-    finalizers:
-    - install.verrazzano.io
-    generation: 2
-    managedFields:
-    - apiVersion: install.verrazzano.io/v1alpha1
-      fieldsType: FieldsV1
-      fieldsV1:
-        f:metadata:
-          f:annotations:
-            .: {}
-            f:kubectl.kubernetes.io/last-applied-configuration: {}
-        f:spec:
-          .: {}
-          f:profile: {}
-      manager: kubectl
-      operation: Update
-      time: "2021-08-23T15:19:23Z"
-    - apiVersion: install.verrazzano.io/v1alpha1
-      fieldsType: FieldsV1
-      fieldsV1:
-        f:metadata:
-          f:finalizers: {}
-        f:spec:
-          f:components:
-            .: {}
-            f:fluentd:
-              .: {}
-              f:extraVolumeMounts: {}
-          f:security: {}
-        f:status:
-          .: {}
-          f:conditions: {}
-          f:instance:
-            .: {}
-            f:consoleUrl: {}
-            f:elasticUrl: {}
-            f:grafanaUrl: {}
-            f:keyCloakUrl: {}
-            f:kibanaUrl: {}
-            f:prometheusUrl: {}
-            f:rancherUrl: {}
-          f:state: {}
-          f:version: {}
-      manager: verrazzano-platform-operator
-      operation: Update
-      time: "2021-08-23T15:30:06Z"
-    name: my-verrazzano
-    namespace: default
-    resourceVersion: "49073970"
-    selfLink: /apis/install.verrazzano.io/v1alpha1/namespaces/default/verrazzanos/my-verrazzano
-    uid: c37cc781-1d16-4aa9-8e08-7111d786fe51
-  spec:
-    components:
-      fluentd:
-        extraVolumeMounts:
-        - source: /u01/data/docker/containers/
-    profile: dev
-    security: {}
-  status:
-    conditions:
-    - lastTransitionTime: "2021-08-23T15:19:24Z"
-      message: Verrazzano install in progress
-      status: "True"
-      type: InstallStarted
-    - lastTransitionTime: "2021-08-23T15:30:05Z"
-      message: Verrazzano install completed successfully
-      status: "True"
-      type: InstallComplete
-    instance:
-      consoleUrl: https://verrazzano.default.129.146.228.44.nip.io
-      elasticUrl: https://elasticsearch.vmi.system.default.129.146.228.44.nip.io
-      grafanaUrl: https://grafana.vmi.system.default.129.146.228.44.nip.io
-      keyCloakUrl: https://keycloak.default.129.146.228.44.nip.io
-      kibanaUrl: https://kibana.vmi.system.default.129.146.228.44.nip.io
-      prometheusUrl: https://prometheus.vmi.system.default.129.146.228.44.nip.io
-      rancherUrl: https://rancher.default.129.146.228.44.nip.io
-    state: Ready
-    version: 1.0.0
-kind: List
-metadata:
-  resourceVersion: ""
-  selfLink: ""
-```
-
 ## Task 2: Deploy the Helidon quickstart-mp application
 
 Download the Verrazzano OAM component yaml file and Verrazzano Application Configuration files in the Cloud Shell environment:
@@ -336,7 +233,7 @@ https://hello-helidon-appconf.hello-helidon.129.146.154.97.nip.io/help/allGreeti
 You can use this link to test from browser, but keep in mind because of self signed certificates you need to accept risk and allow browser to continue the request processing.
 Probably it's easier to use `curl` because the response is only a string:
 ```bash
-curl -k https://$(kubectl get gateway hello-helidon-hello-helidon-appconf-gw -n hello-helidon -o jsonpath={.spec.servers[0].hosts[0]})/help/allGreetings; echo
+<copy>curl -k https://$(kubectl get gateway hello-helidon-hello-helidon-appconf-gw -n hello-helidon -o jsonpath={.spec.servers[0].hosts[0]})/help/allGreetings; echo</copy>
 ```
 
 You should get the same result what you got during the development:

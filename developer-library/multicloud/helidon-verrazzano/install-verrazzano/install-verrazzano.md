@@ -180,13 +180,12 @@ An ingress controller is something that helps provide access to Docker container
 
     > The console log contains information about all the steps performed by the platform operator for installing Verrazzano, the components being installed, and the URLs we can use for accessing them.
 
-    ![view logs](images/14.png)
     ![view logs](images/15.png)
 
 Leave the *Cloud Shell* open and let the installation running. Please continue with the next lab.
 
 ## Acknowledgements
 
-* **Author** -  Peter Nagy
+* **Author** -  Ankit Pandey
 * **Contributors** - Maciej Gruszka, Peter Nagy
 * **Last Updated By/Date** - Peter Nagy, August 2021
