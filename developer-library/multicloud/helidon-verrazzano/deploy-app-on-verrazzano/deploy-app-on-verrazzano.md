@@ -186,7 +186,7 @@ image: "ocir.io/id9hokcxpkra/quickstart-mp:1.0"
 Use `Esc` the quit insert mode and type `wq` to save changes and close the editor.
 
 We will keep all Kubernetes artifacts in the separate namespace. Create a `hello-helidon` namespace for the Helidon quickstart-mp application. Namespaces are a way to organize clusters into virtual sub-clusters. We can have any number of namespaces within a cluster, each logically separated from others but with the ability to communicate with each other.
-Also we need to make Verrazzano aware that we store in that namespace Verrazzano artifacts. So we need to add a a label identifying the `hello-helidon` namespace as managed by Verrazzano. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users. Here, for the `hello-helidon` namespace, we are attaching a label to it, which marks this namespace as managed by Verrazzano. The *istio-injection=enabled*, enables an Istio "sidecar", and as such, helps establish an Istio proxy. With an Istio proxy, we can access other Istio services like an Istio gateway and such. To add the label to the bobs-books namespace with the previously mentioned attributes, copy the following command and run it in the Cloud Shell:
+Also we need to make Verrazzano aware that we store in that namespace Verrazzano artifacts. So we need to add a a label identifying the `hello-helidon` namespace as managed by Verrazzano. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users. Here, for the `hello-helidon` namespace, we are attaching a label to it, which marks this namespace as managed by Verrazzano. The *istio-injection=enabled*, enables an Istio "sidecar", and as such, helps establish an Istio proxy. With an Istio proxy, we can access other Istio services like an Istio gateway and such. To add the label to the hello-helidon namespace with the previously mentioned attributes, copy the following command and run it in the Cloud Shell:
 ```bash
 <copy>
 kubectl create namespace hello-helidon
@@ -204,7 +204,7 @@ The `hello-helidon-app.yaml` file is a Verrazzano application configuration file
 <copy>kubectl apply -f ~/hello-helidon-app.yaml</copy>
 ```
 
-Wait for all of the pods in the Bob’s Books example application to be in the *Running* state. You may need to repeat this command several times before it is successful. The WebLogic Server and Coherence pods may take a while to be created and Ready. This *kubectl* command will wait for all the pods to be in the *Running* state within the bobs-books namespace. It takes around 4-5 minutes.
+Wait for all of the pods in the Bob’s Books example application to be in the *Running* state. You may need to repeat this command several times before it is successful. The WebLogic Server and Coherence pods may take a while to be created and Ready. This *kubectl* command will wait for all the pods to be in the *Running* state within the hello-helidon namespace. It takes around 4-5 minutes.
 ```bash
 <copy>kubectl wait --for=condition=Ready pods --all -n hello-helidon --timeout=600s</copy>
 ```
