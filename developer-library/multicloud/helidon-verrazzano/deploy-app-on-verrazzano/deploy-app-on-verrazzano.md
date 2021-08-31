@@ -54,7 +54,7 @@ A brief description of each field of the component:
 
 ### Verrazzano Application Configurations
 
-A Verrazzano application configuration is a Kubernetes Custom Resource which provides environment specific customizations. The following code shows the application configuration for the Bob's Books example used in this lab. This resource specifies the deployment of the application to the hello-helidon namespace.
+A Verrazzano application configuration is a Kubernetes Custom Resource which provides environment specific customizations. The following code shows the application configuration for the Helidon quickstart mp example used in this lab. This resource specifies the deployment of the application to the hello-helidon namespace.
 
 Additional runtime features are specified using traits, or runtime overlays that augment the workload. For example, the ingress trait specifies the ingress host and path, while the metrics trait provides the Prometheus scraper used to obtain the application related metrics.
 
@@ -204,9 +204,9 @@ The `hello-helidon-app.yaml` file is a Verrazzano application configuration file
 <copy>kubectl apply -f ~/hello-helidon-app.yaml</copy>
 ```
 
-Wait for all of the pods in the Bob’s Books example application to be in the *Running* state. You may need to repeat this command several times before it is successful. The WebLogic Server and Coherence pods may take a while to be created and Ready. This *kubectl* command will wait for all the pods to be in the *Running* state within the hello-helidon namespace. It takes around 4-5 minutes.
+Wait for all of the pods to be in the *Running* state. This *kubectl* command will wait for all the pods to be in the *Running* state within the hello-helidon namespace. It takes around 4-5 minutes.
 ```bash
-<copy>kubectl wait --for=condition=Ready pods --all -n hello-helidon --timeout=600s</copy>
+<copy>kubectl wait --for=condition=Ready pods --all -n hello-helidon --timeout=180s</copy>
 ```
 When the pods are ready you can see similar response:
 ```bash
