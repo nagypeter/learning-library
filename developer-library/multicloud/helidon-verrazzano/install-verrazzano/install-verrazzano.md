@@ -170,7 +170,7 @@ An ingress controller is something that helps provide access to Docker container
 
     ![wait for installation to complete](images/13.png)
 
-    > It takes around 15 to 20 minutes to complete the installation.
+    > It takes around 15 to 20 minutes to complete the installation. To view the installation logs, go to the next commands.
 
 2. To find out how the installation process is going, you can copy and paste the following command in the *Cloud Shell* to monitor the console log.
 

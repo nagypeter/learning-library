@@ -51,7 +51,7 @@ PowerShell -Command Invoke-WebRequest -Uri "https://helidon.io/cli/latest/window
 </copy>
 ```
 
-For Windows you will also need the Visual C++ Redistributable Runtime. See ![Helidon on Windows](https://helidon.io/docs/v2/#/about/04_windows) for more information.
+For Windows you will also need the Visual C++ Redistributable Runtime. See [Helidon on Windows](https://helidon.io/docs/v2/#/about/04_windows) for more information.
 
 
 ## Task 2: Create Helidon Greeting App
@@ -132,6 +132,7 @@ quickstart-mp
 ```
 
 ## Task 3: Run locally the Helidon Greeting App
+In the same console/terminal. from the quickstart-mp directory run the following two commands.
 
 With JDK11+
 ```bash
@@ -142,6 +143,8 @@ java -jar target/quickstart-mp.jar
 ```
 
 ### Exercise the application
+
+Open a new terminal/console and run the following commands to check the application.
 
 ```bash
 curl -X GET http://localhost:8080/greet
@@ -157,6 +160,8 @@ curl -X GET http://localhost:8080/greet/Jose
 ```
 
 ### Try health and metrics
+
+In the same terminal/console, run the following commands to check health and metrics.
 
 ```bash
 curl -s -X GET http://localhost:8080/health
@@ -175,13 +180,15 @@ curl -H 'Accept: application/json' -X GET http://localhost:8080/metrics
 
 ```
 
+Press 'Ctrl + C' in the terminal, where you have running the "java -jar target/quickstart-mp.jar" commands to stop the *quickstart-mp* application.
+
 ## Task 4: Modify the app
 
 Ok, let us modify our application. Let us open our favourite IDE and find **microprofile-config.properties** file.
 
 ![Initial](images/1.jpg)
 
-In the console, in the folder of the project, type:
+In the console/terminal, in the folder of the project, type:
 
 ```bash
 <copy>helidon dev</copy>
@@ -211,7 +218,7 @@ The result is expected to be:
 {"message":"Hello Oracle World!"}
 ```
 
-We have made our first modification!
+We have made our first modification!.
 
 Let us now jump to some Java code. Please, open the **GreetResource.java** file.
 
@@ -253,7 +260,7 @@ public class GreetHelpResource {
 </copy>
 ```
 
-The class has only one method *getAllGreetings* which returns a list with greetings in different languages.
+The class has only one method *getAllGreetings* which returns a list with greetings in different languages. While copying the code, if you encounter an error, then add the necessary package name.
 
 Now as we build and run the application:
 
@@ -300,7 +307,7 @@ This easy we can add a new endpoint!
 
 So, working with Helidon and its tooling is really easy and fast!
 
-Please leave your terminal/cmd open and continue with Verrazzano installation lab.
+Please leave your terminal/console open and continue with Verrazzano installation lab.
 
 ## Acknowledgements
 

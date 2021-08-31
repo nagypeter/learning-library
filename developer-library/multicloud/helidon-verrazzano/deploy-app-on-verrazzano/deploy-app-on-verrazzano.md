@@ -204,7 +204,7 @@ The `hello-helidon-app.yaml` file is a Verrazzano application configuration file
 <copy>kubectl apply -f ~/hello-helidon-app.yaml</copy>
 ```
 
-Wait for all of the pods to be in the *Running* state. This *kubectl* command will wait for all the pods to be in the *Running* state within the hello-helidon namespace. It takes around 4-5 minutes.
+Wait for all of the pods to be in the *Running* state. This *kubectl* command will wait for all the pods to be in the *Running* state within the hello-helidon namespace. It takes around 1-2 minutes.
 ```bash
 <copy>kubectl wait --for=condition=Ready pods --all -n hello-helidon --timeout=180s</copy>
 ```

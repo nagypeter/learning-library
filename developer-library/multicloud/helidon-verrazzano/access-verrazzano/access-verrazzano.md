@@ -136,13 +136,13 @@ items:
       status: "True"
       type: InstallComplete
     instance:
-      consoleUrl: https://verrazzano.default.129.146.228.44.nip.io
-      elasticUrl: https://elasticsearch.vmi.system.default.129.146.228.44.nip.io
-      grafanaUrl: https://grafana.vmi.system.default.129.146.228.44.nip.io
-      keyCloakUrl: https://keycloak.default.129.146.228.44.nip.io
-      kibanaUrl: https://kibana.vmi.system.default.129.146.228.44.nip.io
-      prometheusUrl: https://prometheus.vmi.system.default.129.146.228.44.nip.io
-      rancherUrl: https://rancher.default.129.146.228.44.nip.io
+      consoleUrl: https://verrazzano.default.XX.XX.XX.XX.nip.io
+      elasticUrl: https://elasticsearch.vmi.system.default.XX.XX.XX.XX.nip.io
+      grafanaUrl: https://grafana.vmi.system.default.XX.XX.XX.XX.nip.io
+      keyCloakUrl: https://keycloak.default.XX.XX.XX.XX.nip.io
+      kibanaUrl: https://kibana.vmi.system.default.XX.XX.XX.XX.nip.io
+      prometheusUrl: https://prometheus.vmi.system.default.XX.XX.XX.XX.nip.io
+      rancherUrl: https://rancher.default.XX.XX.XX.XX.nip.io
     state: Ready
     version: 1.0.0
 kind: List

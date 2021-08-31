@@ -1,4 +1,4 @@
-# Push the Docker Image for bobbys-helidon-stock-application to the Oracle Cloud Container Registry
+# Push the Docker Image for Helidon Application to the Oracle Cloud Container Registry
 
 ## Introduction
 
@@ -151,7 +151,7 @@ Select the compartment and then click *Create Repository*.
 
 ![Repository Create](images/8.png)
 
-Select the compartment and enter *helidon-stock-application* as the Repository Name, then choose Access as *Public* and then click *Create Repository*.
+Select the compartment and enter *quickstart-mp* as the Repository Name, then choose Access as *Public* and then click *Create Repository*.
 
 ![Repository Description](images/9.png)
 

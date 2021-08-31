@@ -13,7 +13,6 @@ Oracle Cloud Infrastructure Container Engine for Kubernetes is a fully-managed, 
 In this lab, you will:
 
 * Create an OKE (Oracle Kubernetes Engine) instance.
-* Open the OCI Cloud Shell and configure `kubectl` to interact with the Kubernetes cluster.
 
 ### Prerequisites
 
@@ -75,13 +74,11 @@ The *Quick Create* feature uses the default settings to create a *quick cluster*
 
     ![Network Resource](images/7.png)
 
-    > Then, the new cluster is shown on the *Cluster Details* page. When the master nodes are created, the new cluster gains a status of *Active* (it takes about 7 minutes).Then, you may continue your labs.
+    > Then, the new cluster is shown on the *Cluster Details* page. When the master nodes are created, the new cluster gains a status of *Active* (it takes about 7 minutes). Till the cluster is ready/active please continue the next Helidon application development lab.
 
     ![cluster1](images/8.png)
 
     ![cluster1](images/9.png)
-
-Till the cluster is ready/active please continue the next Helidon application development lab.
 
 ## Acknowledgements
 
