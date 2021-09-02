@@ -16,7 +16,7 @@
             "filename": "../setup-oke-ocishell/setup-oke-ocishell.md"
         },
         {
-            "title": "Lab 2: Develop Helidon application",
+            "title": "Lab 2: Develop Helidon Application",
             "filename": "../develop-application/develop-application.md"
         },
         {
@@ -24,15 +24,15 @@
             "filename": "../install-verrazzano/install-verrazzano.md"
         },
         {
-            "title": "Lab 4: Build and push Helidon application image into Oracle Cloud Container Registry",
+            "title": "Lab 4: Push Helidon Application Image to Oracle Cloud Container Registry",
             "filename": "../build-and-push-app-image/build-and-push-app-image.md"
         },
         {
-            "title": "Lab 5: Deploy Helidon application on Verrazzano",
+            "title": "Lab 5: Deploy Helidon Application on Verrazzano",
             "filename": "../deploy-app-on-verrazzano/deploy-app-on-verrazzano.md"
         },
 		    {
-            "title": "Lab 6: Access the application, explore Verrazzano and monitor the application",
+            "title": "Lab 6: Use Verrazzano to Access and Monitor the Application",
             "filename": "../access-verrazzano/access-verrazzano.md"
         },
         {

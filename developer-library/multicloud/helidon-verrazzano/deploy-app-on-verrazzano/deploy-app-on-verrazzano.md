@@ -1,6 +1,6 @@
 # Deploy the Helidon Application on Verrazzano
 
-## Introductions
+## Introduction
 
 ### Verrazzano and Application Deployment
 
@@ -12,7 +12,7 @@ When you deploy applications with Verrazzano, the platform sets up connections, 
 
 A Verrazzano OAM component is a [Kubernetes Custom Resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) describing an application’s general composition and environment requirements.
 
-The following code shows a simple Helidon application component for Helidon quickstart-mp application used in this lab. This resource describes a component which is implemented by a single Docker image containing a Helidon application exposing a single endpoint.
+The following code shows a simple Helidon application component for Helidon *quickstart-mp* application used in this lab. This resource describes a component which is implemented by a single Docker image containing a Helidon application exposing a single endpoint.
 
 ```yaml
 apiVersion: core.oam.dev/v1alpha2
@@ -54,7 +54,7 @@ A brief description of each field of the component:
 
 ### Verrazzano Application Configurations
 
-A Verrazzano application configuration is a Kubernetes Custom Resource which provides environment specific customizations. The following code shows the application configuration for the Helidon quickstart mp example used in this lab. This resource specifies the deployment of the application to the hello-helidon namespace.
+A Verrazzano application configuration is a Kubernetes Custom Resource which provides environment-specific customizations. The following code shows the application configuration for the Helidon *quickstart-mp* example used in this lab. This resource specifies the deployment of the application to the hello-helidon namespace.
 
 Additional runtime features are specified using traits, or runtime overlays that augment the workload. For example, the ingress trait specifies the ingress host and path, while the metrics trait provides the Prometheus scraper used to obtain the application related metrics.
 
@@ -111,29 +111,29 @@ This lab walks you through the process of deploying the Helidon quickstart-mp ap
 In this lab, you will:
 
 * Verify the successful installation of the Verrazzano environment.
-* Deploy the Helidon quickstart-mp application.
-* Verify the deployment of the Helidon quickstart-mp application.
+* Deploy the Helidon *quickstart-mp* application.
+* Verify the deployment of the Helidon *quickstart-mp* application.
 
 ### Prerequisites
 
 To run this lab, you must have:
 
-* Running Kubernetes (OKE) cluster on the Oracle Cloud Infrastructure.
-* (Started) Verrazzano installation on a Kubernetes (OKE) cluster.
-* Container packaged Helidon quickstart-mp application available in container registry.
+* Kubernetes (OKE) cluster running on the Oracle Cloud Infrastructure.
+* Verrazzano installation started on a Kubernetes (OKE) cluster.
+* Container packaged Helidon *quickstart-mp* application available in container registry.
 
-## Task 1: Verification of a successful Verrazzano installation
+## Task 1: Verify the Verrazzano Installation is Complete
 
-Open again the Cloud Shell console where you started the Verrazzano installations. If the console broken due to timeout login and start the Cloud Shell again.
+1. Open the Cloud Shell console where you started the Verrazzano installations. If the console stopped due to a timeout, log in and start the Cloud Shell again.
 
-To verify Verrazzano installation copy the following command and paste it in the *Cloud Shell*. It checks for the condition, if *InstallComplete* condition is met, and notifies you. Here *my-verrazzano* is the name of the *Verrazzano Custom Resource*.
+2. To verify a successful Verrazzano installation, copy the following command and paste it in the Cloud Shell. This command checks that the *InstallComplete* condition has been met and notifies you. In this example, *my-verrazzano* is the name of the *Verrazzano Custom Resource*.
 
 ```bash
 <copy>kubectl wait --timeout=10m --for=condition=InstallComplete verrazzano/my-verrazzano</copy>
 ```
-When the process is complete you have to see the `verrazzano.install.verrazzano.io/my-verrazzano condition met` response.
+When the process is complete you should see the `verrazzano.install.verrazzano.io/my-verrazzano condition met` response.
 
-Another option to check the pods associated with Verrazzano have a *Running* status.
+Or, another option is to check that the pods associated with Verrazzano have a *Running* status.
 
 ```bash
 <copy>kubectl get pods -n verrazzano-system</copy>
@@ -161,7 +161,7 @@ weblogic-operator-786b8db578-gtf54                 2/2     Running   0          
 
 ## Task 2: Deploy the Helidon quickstart-mp application
 
-Download the Verrazzano OAM component yaml file and Verrazzano Application Configuration files in the Cloud Shell environment:
+1. Download the Verrazzano OAM component yaml file and Verrazzano Application Configuration files in the Cloud Shell environment:
 
 ```bash
 <copy>
@@ -170,12 +170,12 @@ curl -LSs https://raw.githubusercontent.com/nagypeter/learning-library/master/de
 cd ~
 </copy>
 ```
-Before use you need to modify the image name in *hello-helidon-comp.yaml*. You can use the `vi` editor:
+2. Modify the image name in *hello-helidon-comp.yaml*. You can use the `vi` editor:
 ```bash
 <copy>vi hello-helidon-comp.yaml</copy>
 ```
 
-Use `i` to change insert mode and modify the image name to reflect your repository path at line 23:
+3. Use `i` to change insert mode and modify the image name to reflect your repository path at line 23:
 ```yaml
 image: "END_POINT_OF_YOUR_REGION/NAMESPACE_OF_YOUR_TENANCY/quickstart-mp:1.0"
 ```
@@ -183,30 +183,48 @@ For example:
 ```yaml
 image: "ocir.io/id9hokcxpkra/quickstart-mp:1.0"
 ```
-Use `Esc` the quit insert mode and type `wq` to save changes and close the editor.
+4. Use `Esc` the quit insert mode and type `wq` to save changes and close the editor.
 
-We will keep all Kubernetes artifacts in the separate namespace. Create a `hello-helidon` namespace for the Helidon quickstart-mp application. Namespaces are a way to organize clusters into virtual sub-clusters. We can have any number of namespaces within a cluster, each logically separated from others but with the ability to communicate with each other.
-Also we need to make Verrazzano aware that we store in that namespace Verrazzano artifacts. So we need to add a a label identifying the `hello-helidon` namespace as managed by Verrazzano. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users. Here, for the `hello-helidon` namespace, we are attaching a label to it, which marks this namespace as managed by Verrazzano. The *istio-injection=enabled*, enables an Istio "sidecar", and as such, helps establish an Istio proxy. With an Istio proxy, we can access other Istio services like an Istio gateway and such. To add the label to the hello-helidon namespace with the previously mentioned attributes, copy the following command and run it in the Cloud Shell:
-```bash
-<copy>
-kubectl create namespace hello-helidon
-kubectl label namespace hello-helidon verrazzano-managed=true istio-injection=enabled
-</copy>
-```
 
-We have a Kuberneter cluster, *cluster1*, with three nodes. Now, we want to deploy Helidon quickstart-mp containerized application on *cluster1*. For this, we need a Kubernetes deployment configuration. This deployment instructs the Kubernetes to create and update instances for the Helidon quickstart-mp application. Here, we have the `hello-helidon-comp.yaml` file, which instructs Kubernetes. To deploy the Helidon quickstart-mp application, copy and paste the following two commands as shown. The `hello-helidon-comp.yaml` file contains definitions of various OAM components, where, an OAM component is a Kubernetes Custom Resource describing an application’s general composition and environment requirements.
+5. Create a `hello-helidon` namespace for the Helidon quickstart-mp application. We will keep all Kubernetes artifacts in the separate namespace.
+
+  ```bash
+  <copy>
+  kubectl create namespace hello-helidon
+  </copy>
+  ```
+
+  >Namespaces are a way to organize clusters into virtual sub-clusters. We can have any number of namespaces within a cluster, each logically separated from others but with the ability to communicate with each other.
+
+6. We need to make Verrazzano aware that we store in that namespace Verrazzano artifacts. So we need to add a label identifying the `hello-helidon` namespace as managed by Verrazzano. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users.
+
+  Here, for the `hello-helidon` namespace, we are attaching a label to it, which marks this namespace as managed by Verrazzano. The *istio-injection=enabled*, enables an Istio "sidecar", and as such, helps establish an Istio proxy. With an Istio proxy, we can access other Istio services like an Istio gateway. To add the label to the bobs-books namespace with the previously mentioned attributes, copy the following command and run it in the Cloud Shell:
+
+  ```bash
+  <copy>
+  kubectl label namespace hello-helidon verrazzano-managed=true istio-injection=enabled
+  </copy>
+  ```
+
+  >We now have a Kuberneter cluster, *cluster1*, with three nodes.
+
+7. Now, we want to deploy Helidon *quickstart-mp* containerized application on *cluster1*. For this, we need a Kubernetes deployment configuration. This deployment instructs the Kubernetes to create and update instances for the Helidon *quickstart-mp* application. Here, we have the `hello-helidon-comp.yaml` file, which instructs Kubernetes.
+
+To deploy the Helidon *quickstart-mp* application, copy and paste the following two commands as shown. The `hello-helidon-comp.yaml` file contains definitions of various OAM components, where, an OAM component is a Kubernetes Custom Resource describing an application’s general composition and environment requirements.
+
 ```bash
 <copy>kubectl apply -f ~/hello-helidon-comp.yaml</copy>
 ```
 
-The `hello-helidon-app.yaml` file is a Verrazzano application configuration file, which provides environment specific customizations.
+The `hello-helidon-app.yaml` file is a Verrazzano application configuration file, which provides environment-specific customizations.
+
 ```bash
 <copy>kubectl apply -f ~/hello-helidon-app.yaml</copy>
 ```
 
-Wait for all of the pods to be in the *Running* state. This *kubectl* command will wait for all the pods to be in the *Running* state within the hello-helidon namespace. It takes around 1-2 minutes.
+8. Wait for the pods to be in *Running* status. Use this *kubectl* command to wait for all the pods to be in the *Running* state within the hello-helidon namespace. It takes around 1-2 minutes.
 ```bash
-<copy>kubectl wait --for=condition=Ready pods --all -n hello-helidon --timeout=180s</copy>
+<copy>kubectl wait --for=condition=Ready pods --all -n hello-helidon --timeout=600s</copy>
 ```
 When the pods are ready you can see similar response:
 ```bash
@@ -220,9 +238,11 @@ NAME                                       READY   STATUS    RESTARTS   AGE
 hello-helidon-deployment-58fdd5cd4-94wjf   2/2     Running   0          34m
 ```
 
-## Task 3: Verify the successful deployment of the Helidon quickstart-mp application
 
-As a first quick test check your `help/allGreetings` endpoint. To determine the URL which constructed from external/load balancer IP and application configuration execute the following command:
+
+## Task 3: Verify the Successful Deployment of the Helidon quickstart-mp Application
+
+1. Verify the `help/allGreetings` endpoint. To determine the URL that was constructed from the external/load balancer IP and application configuration, execute the following command:
 ```bash
 <copy>echo https://$(kubectl get gateway hello-helidon-hello-helidon-appconf-gw -n hello-helidon -o jsonpath={.spec.servers[0].hosts[0]})/help/allGreetings</copy>
 ```
@@ -230,17 +250,19 @@ This will print the proper URL to your REST endpoint, for example:
 ```bash
 https://hello-helidon-appconf.hello-helidon.129.146.154.97.nip.io/help/allGreetings
 ```
-You can use this link to test from browser, but keep in mind because of self signed certificates you need to accept risk and allow browser to continue the request processing.
-Probably it's easier to use `curl` because the response is only a string:
+2. Use this link to test from your browser. Due to self-signed certificates, however, you need to accept risk and allow the browser to continue the request processing.
+You may find it easier to use `curl` because the response is only a string:
+
 ```bash
 <copy>curl -k https://$(kubectl get gateway hello-helidon-hello-helidon-appconf-gw -n hello-helidon -o jsonpath={.spec.servers[0].hosts[0]})/help/allGreetings; echo</copy>
 ```
 
-You should get the same result what you got during the development:
+You should see the same result you received during the development:
 ```yaml
 [Hello, Привет, Hola, Hallo, Ciao, Nǐ hǎo, Marhaba, Olá]
 ```
-Leave the *Cloud Shell* open; we will use it for the next labs as well.
+
+3. Leave the *Cloud Shell* open; we will use it for the next lab.
 
 ## Acknowledgements
 

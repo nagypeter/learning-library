@@ -31,8 +31,7 @@ Verrazzano requires the following:
 
 * A Kubernetes cluster and a compatible `kubectl`.
 * At least 2 CPUs, 100GB disk storage, and 16GB RAM available on the Kubernetes worker nodes. This is sufficient to install the development profile of Verrazzano. Depending on the resource requirements of the applications you deploy, this may or may not be sufficient for deploying your applications.
-
-In Lab 1, we created a Kubernetes cluster on the Oracle Cloud Infrastructure. We will use that Kubernetes cluster, *cluster1*, for installing the development profile of Verrazzano.
+* In Lab 1, you created a Kubernetes cluster on the Oracle Cloud Infrastructure. You will use that Kubernetes cluster, *cluster1*, for installing the development profile of Verrazzano.
 
 ## Task 1: Configure `kubectl` (Kubernetes Cluster CLI)
 
@@ -50,15 +49,15 @@ We will use `kubectl` to manage the cluster remotely using the Cloud Shell. It n
 
     > A dialog is displayed from which you can open the Cloud Shell and contains the customized OCI command that you need to run, to create a Kubernetes configuration file.
 
-2. Leave the default *Cloud Shell Access* and first select the *Copy* link to copy the `oci ce...` command to the Cloud Shell.
+2. Accept the default **Cloud Shell Access** and click **Copy** copy the `oci ce...` command to the Cloud Shell.
 
     ![Copy kubectl Config](images/2.png)
 
-3. Now, click *Launch Cloud Shell* to open the built in console. Then close the configuration dialog before you paste the command into the *Cloud Shell*.
+3. Click **Launch Cloud Shell** to open the built-in console. Close the configuration dialog before you paste the command into the *Cloud Shell*.
 
     ![Launch Cloud Shell](images/3.png)
 
-4. Copy the command from the clipboard (Ctrl+V or right click and copy) into the Cloud Shell and run the command.
+4. Copy the command from the clipboard and paste it into the Cloud Shell and run the command.
 
     For example, the command looks like the following:
 
@@ -68,7 +67,8 @@ We will use `kubectl` to manage the cluster remotely using the Cloud Shell. It n
 
     ![kubectl config](images/4.png)
 
-5. Now check that `kubectl` is working, for example, using the `get node` command. you may need to run this command several times until you see the output similar to following.
+5. Verify that the `kubectl` is working by using the `get node` command. <br>
+You may need to run this command several times until you see the output similar to the following.
 
     ```bash
     <copy>kubectl get node</copy>
@@ -88,7 +88,7 @@ We will use `kubectl` to manage the cluster remotely using the Cloud Shell. It n
 
     ![cloud shell](images/5.png)
 
-Leave this *Cloud Shell* open; we will use it for further labs.
+7. Leave this *Cloud Shell* open; we will use it for further labs.
 
 ## Task 2: Install the Verrazzano Platform Operator
 
@@ -125,7 +125,7 @@ Before installing Verrazzano, we need to install the Verrazzano Platform Operato
 
     ![running pod](images/11.png)
 
-## Task 3: Installation of the Verrazzano development profile
+## Task 3: Install the Verrazzano Development Profile
 
 An installation profile is a well-known configuration of Verrazzano settings that can be referenced by name, which can then be customized as needed.
 
@@ -152,7 +152,7 @@ The following image describes the Verrazzano components that are installed with 
 
 According to our DNS choice, we can use nip.io (wildcard DNS) or [Oracle OCI DNS](https://docs.cloud.oracle.com/en-us/iaas/Content/DNS/Concepts/dnszonemanagement.htm). In this lab, we are going to install using nip.io (wildcard DNS).
 
-An ingress controller is something that helps provide access to Docker containers to the outside world (by providing an IP address). The ingress routes the IP address to different clusters.
+>An ingress controller is something that helps provide access to Docker containers to the outside world (by providing an IP address). The ingress routes the IP address to different clusters.
 
 1. Install using the nip.io DNS Method. Copy the following command and paste it in the *Cloud Shell* to install Verrazzano.
 
@@ -182,7 +182,7 @@ An ingress controller is something that helps provide access to Docker container
 
     ![view logs](images/15.png)
 
-Leave the *Cloud Shell* open and let the installation running. Please continue with the next lab.
+3. Leave the *Cloud Shell* open and let the installation running. Please continue with the next lab.
 
 ## Acknowledgements
 

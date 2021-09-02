@@ -2,30 +2,37 @@
 
 ## Introduction
 
-This lab walks you through the steps to create Helidon MP application and package using Docker.
+This lab walks you through the steps to create a Helidon MP application.
 
 ### About Product/Technology
 
-Helidon is designed to be simple to use, with tooling and examples to get you going quickly. Since Helidon is just a collection of libraries running on a fast Netty core, there is no extra overhead or bloat.
+Helidon is designed to be simple to use, with tooling and examples to get you going quickly. Since Helidon is just a collection of libraries running on a fast Netty core, there is no extra overhead or bloat. Helidon supports MicroProfile and provides familiar APIs like JAX-RS, CDI and JSON-P/B. Our MicroProfile implementation runs on our fast Helidon Reactive WebServer. The Reactive WebServer provides a modern, functional, programming model and runs on top of Netty. Lightweight, flexible and reactive, the Helidon WebServer provides a simple to use and fast foundation for your microservices.
 
-Helidon supports MicroProfile and provides familiar APIs like JAX-RS, CDI and JSON-P/B. Our MicroProfile implementation runs on our fast Helidon Reactive WebServer
+With support for health checks, metrics, tracing and fault tolerance, Helidon has what you need to write cloud-ready applications that integrate with Prometheus, Jaeger/Zipkin and Kubernetes.
 
-Helidon Reactive WebServer provides a modern functional programming model and runs on top of Netty. Lightweight, flexible and reactive, the Helidon WebServer provides a simple to use and fast foundation for your microservices.
-
-With support for health checks, metrics, tracing and fault tolerance, Helidon has what you need to write cloud ready applications that integrate with Prometheus, Jaeger/Zipkin and Kubernetes.
-
-### Helidon CLI
+### About Helidon CLI
 
 The Helidon CLI lets you easily create a Helidon project by picking from a set of archetypes. It also supports a developer loop that performs continuous compilation and application restart, so you can easily iterate over source code changes.
 
 The CLI is distributed as a standalone executable (compiled using GraalVM) for ease of installation. It is currently available as a download for Linux, Mac and Windows. Simply download the binary, install it at a location accessible from your PATH and you’re ready to go.
 
+### Objectives
+* Install the Helidon CLI
+* Create a MicroProfile supported microservice called Helidon Greeting
+* Run and exercise the Helidon Greeting app
+* View health and metrics data
+* Add new functionality to the app
+
 ### Prerequisites
 
-Helidon requires Java 11 (or newer) and Maven (3.6.1+).
-You should make sure java and `mvn` are in your path.
+* Helidon requires Java 11+
+* Maven (3.6.1+)
+* Java and `mvn` are in your path.
+* Windows users will also need the Visual C++ Redistributable Runtime. <br>
+See [Helidon on Windows](https://helidon.io/docs/v2/#/about/04_windows) for more information.
 
-## Task 1: Helidon CLI Installation
+## Task 1: Install the Helidon CLI
+
 MacOS:
 ```bash
 <copy>
@@ -51,17 +58,16 @@ PowerShell -Command Invoke-WebRequest -Uri "https://helidon.io/cli/latest/window
 </copy>
 ```
 
-For Windows you will also need the Visual C++ Redistributable Runtime. See [Helidon on Windows](https://helidon.io/docs/v2/#/about/04_windows) for more information.
 
 
-## Task 2: Create Helidon Greeting App
-In your console type:
+
+## Task 2: Create Helidon Greeting Application
+1. In your console enter:
 ```bash
 <copy>helidon init</copy>
 ```
 
-Then answer the questions.
-For this demo we will create *MicroProfile* supported microservice, so, please, choose option **2** for Helidon Flavour:
+2. For this demo we will create *MicroProfile* supported microservice, so choose option **2** for **Helidon Flavor**:
 
 ```bash
 Version 2.2.0 of this CLI is now available.
@@ -74,7 +80,8 @@ Helidon flavor
 Enter selection (Default: 1): 2
 ```
 
-To have more functionality from the very beginning let us choose option **(2) quickstart**, then just press **Enter** for the default answers. This will be enough. Please note you can have different default package and project group name because it uses the os user name.
+3. For the most functionality, choose option **(2) quickstart** then **Enter** for the default answers. Note that you can have different default package and project group names because it uses the OS user name.
+
 
 ```bash
 Select archetype
@@ -92,9 +99,9 @@ Switch directory to /Users/mitia/Desktop/quickstart-mp to use CLI
 Start development loop? (Default: n):
 ```
 
-For the **development loop** we will come a bit later.
+>For the **development loop** accept the default (**n**) for now. You will come back to this later.
 
-Wonderful! Now we have a fully functional Microservice Maven Project:
+You now have a fully functional Microservice Maven Project:
 
 ```bash
 quickstart-mp
@@ -131,8 +138,8 @@ quickstart-mp
 
 ```
 
-## Task 3: Run locally the Helidon Greeting App
-In the same console/terminal. from the quickstart-mp directory run the following two commands.
+## Task 3: Run the Helidon Greeting Application
+From the same console/terminal, navigate to the quickstart-mp directory and run the following two commands:
 
 With JDK11+
 ```bash
@@ -142,26 +149,32 @@ java -jar target/quickstart-mp.jar
 </copy>
 ```
 
-### Exercise the application
+### Exercise the Application
 
-Open a new terminal/console and run the following commands to check the application.
+Open a new terminal/console and run the following commands to check the application:
 
 ```bash
 curl -X GET http://localhost:8080/greet
 {"message":"Hello World!"}
+```
 
+```bash
 curl -X GET http://localhost:8080/greet/Joe
 {"message":"Hello Joe!"}
+```
 
+```bash
 curl -X PUT -H "Content-Type: application/json" -d '{"greeting" : "Hola"}' http://localhost:8080/greet/greeting
+```
 
+```bash
 curl -X GET http://localhost:8080/greet/Jose
 {"message":"Hola Jose!"}
 ```
 
-### Try health and metrics
+### Review Health and Metrics Data
 
-In the same terminal/console, run the following commands to check health and metrics.
+1. In the same terminal/console, run the following commands to check health and metrics:
 
 ```bash
 curl -s -X GET http://localhost:8080/health
@@ -180,23 +193,23 @@ curl -H 'Accept: application/json' -X GET http://localhost:8080/metrics
 
 ```
 
-Press 'Ctrl + C' in the terminal, where you have running the "java -jar target/quickstart-mp.jar" commands to stop the *quickstart-mp* application.
+2. Stop the *quickstart-mp* application by entering 'Ctrl + C' in the terminal where the "java -jar target/quickstart-mp.jar" command is running.
 
-## Task 4: Modify the app
+## Task 4: Modify the Application
 
-Ok, let us modify our application. Let us open our favourite IDE and find **microprofile-config.properties** file.
+1. Open your favorite IDE and navigate to the **microprofile-config.properties** file.
 
 ![Initial](images/1.jpg)
 
-In the console/terminal, in the folder of the project, type:
+2. In the console/terminal, navigate to the project folder and enter:
 
 ```bash
 <copy>helidon dev</copy>
 ```
 
-This will start the **Development loop** we've mentioned earlier.
+>This will start the *Development loop* mentioned in the previous task.
 
-Now change the property *app.greeting* to "Hello Oracle" for example.
+3. Change the property *app.greeting* to "Hello Oracle".
 
 ```properties
 <copy>app.greeting=Hello Oracle</copy>
@@ -204,9 +217,9 @@ Now change the property *app.greeting* to "Hello Oracle" for example.
 
 ![HelidonDev](images/2.jpg)
 
-You will see that whenever we change any file, the **Helidon CLI** recognizes there is a change, recompiles the app, and reruns it. Since Helidon is really small, everything happens really quickly.
+>You will see that whenever you change a file, the **Helidon CLI** recognizes there is a change, recompiles the app, and reruns it. Since Helidon is really small, everything happens really quickly.
 
-Now if you type in your console:
+4. In the console/terminal, enter the following:
 
 ```bash
 <copy>curl -X GET http://localhost:8080/greet</copy>
@@ -218,18 +231,15 @@ The result is expected to be:
 {"message":"Hello Oracle World!"}
 ```
 
-We have made our first modification!.
+>Great! You made your first modification.
 
-Let us now jump to some Java code. Please, open the **GreetResource.java** file.
+5. Go back to your project folder and open the **GreetResource.java** file.
 
-As you may see it is a pure MicroProfile compatible code:
+>You can see that it is pure MicroProfile compatible code:
 
 ![ModifyJava](images/3.jpg)
 
-Let us now create a new functionality.
-Let us create a new end point, that provides help for different greeting in different languages.
-
-Just create a new class **GreetHelpResource** with the following code:
+6. Create a new endpoint that provides help for different greetings in different languages. To create this new functionality, create a new class called **GreetHelpResource** with the following code:
 
 ```java
 <copy>
@@ -260,9 +270,9 @@ public class GreetHelpResource {
 </copy>
 ```
 
-The class has only one method *getAllGreetings* which returns a list with greetings in different languages. While copying the code, if you encounter an error, then add the necessary package name.
+>The class has only one method *getAllGreetings* which returns a list with greetings in different languages. While copying the code, if you encounter an error, then add the necessary package name.
 
-Now as we build and run the application:
+7. Build and run the application:
 
 ```bash
 <copy>
@@ -271,7 +281,7 @@ java -jar target/quickstart-mp.jar
 </copy>
 ```
 
-And as we do curl:
+8. Execute the following command and notice the results:
 
 ```bash
 <copy>curl http://localhost:8080/help/allGreetings</copy>
@@ -281,7 +291,7 @@ The expected result:
 [Hello, Привет, Hola, Hallo, Ciao, Nǐ hǎo, Marhaba, Olá]
 ```
 
-If we take a look at the metrics:
+9. Look at the metrics and you will see that a new counter appeared. Whenever this endpoint is called the value will increment:
 
 ```bash
 curl http://localhost:8080/metrics
@@ -293,21 +303,20 @@ application_me_buzz_mp_quickstart_GreetHelpResource_helpCalled_total 3
 ...
 ```
 
-We'll see a new counter appeared. Whenever this Endpoint is called the value above will increment.
 
-We will also see in the console an INFO log line about this call:
+10. In the console you will now see the INFO log line about this call:
 
 ```bash
 INFO me.buzz.mp.quickstart.GreetHelpResource Thread[helidon-4,5,server]: Help requested!
 ```
 
-This easy we can add a new endpoint!
+And the new endpoint has been added.
 
 ![NewEndpoint](images/4.jpg)
 
-So, working with Helidon and its tooling is really easy and fast!
+>Working with Helidon and its tooling is really easy and fast!
 
-Please leave your terminal/console open and continue with Verrazzano installation lab.
+11. Leave your terminal/console open and continue with Verrazzano installation lab.
 
 ## Acknowledgements
 
