@@ -31,7 +31,7 @@ We are creating a Docker image, which you will upload to Oracle Cloud Container 
 You can find out your *Region Name* in top right corner in the Oracle Cloud Console, as shown in following image.
 ![Container Registry](images/15.png)
 
-For finding the Namespace of the tenancy, select the Hamburger Menu -> Developer Services -> Container Registry, as shown. In the compartment, you will find the Namespace. Copy and save it, because we will use it in the next lab too. For example in this example the tenancy namespace is *id9hokcxpkra*.
+For finding the Namespace of the tenancy, select the Hamburger Menu -> Developer Services -> Container Registry, as shown. In the compartment, you will find the Namespace. Copy and save it, because we will use it in the next lab too.
 
 ![Tenancy Namespace](images/20.png)
 ![Tenancy Namespace](images/16.png)
@@ -138,7 +138,7 @@ Copy the following command and paste it in your text editor and then replace the
 In the previous step, you also determined the Tenancy Namespace. Make the user name as follows: `NAMESPACE_OF_YOUR_TENANCY`/oracleidentitycloudservice/`YOUR_ORACLE_CLOUD_USERNAME`. Here, replace `NAMESPACE_OF_YOUR_TENANCY` with your tenancy's namespace and `YOUR_ORACLE_CLOUD_USERNAME` with your Oracle Cloud Account user name and then copy the replaced user name from your text editor and paste it in the *Cloud Shell*. For Password , paste the Authentication Token from your text editor or where you saved it.
 ```bash
 $ docker login iad.ocir.io
-Username: id9hokcxpkra/oracleidentitycloudservice/YOUR_ORACLE_CLOUD_USERNAME
+Username: tenancynamespace/oracleidentitycloudservice/YOUR_ORACLE_CLOUD_USERNAME
 Password:
 Login Succeeded
 ```
