@@ -26,7 +26,7 @@ The CLI is distributed as a standalone executable (compiled using GraalVM) for e
 ### Prerequisites
 
 * Helidon requires Java 11+
-* Maven (3.6.1+)
+* Maven (3.6.x) (**!!!Please do not use 3.8.x due to known issue with application build.**)
 * Java and `mvn` are in your path.
 * Windows users will also need the Visual C++ Redistributable Runtime. <br>
 See [Helidon on Windows](https://helidon.io/docs/v2/#/about/04_windows) for more information.
@@ -64,8 +64,9 @@ PowerShell -Command Invoke-WebRequest -Uri "https://helidon.io/cli/latest/window
 ## Task 2: Create Helidon Greeting Application
 1. In your console enter:
 ```bash
-<copy>helidon init</copy>
+<copy>helidon init --version 2.3.2</copy>
 ```
+> To avoid any potential issues you define specific Helidon version which was tested in this lab's environment.
 
 2. For this demo we will create *MicroProfile* supported microservice, so choose option **2** for **Helidon Flavor**:
 
