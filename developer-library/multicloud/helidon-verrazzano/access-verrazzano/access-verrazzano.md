@@ -2,7 +2,7 @@
 
 ## Introduction
 
-You deployed the Helidon *quickstart-mp* application. In this lab, we will access the application and verify using multiple management tools.
+You deployed the Helidon *quickstart-mp* application. In this lab, we will access the application and verify using multiple management tools provided by Verrazzano.
 
 ### Grafana
 
@@ -286,10 +286,38 @@ On the Kibana homepage click **Discover** or the shortcut menu icon on the left 
 
 ![Rancher login](images/26.png)
 
-TODO - could not login
+5. On the Cluster Manager page you can monitor and manage multiple cluster controlled by Verrazzano. In this lab you have only one (OKE) cluster. Click on the **Explorer** button to open the *Cluster Explorer*. The *Cluster Explorer* allows you to view and manipulate all of the custom resources and CRDs in a Kubernetes cluster from the Rancher UI.
+
+![Cluster Manager](images/27.png)
+
+6. The dashboard gives an overview about the cluster and the deployed applications. The number of resources belong to the *User Namespaces* which is practically almost all the resources including the system too. You can filter by namespace at top of the dashboard, but this is not necessary now. Click on the **Nodes** item in the left side menu to get an overview about the current load of the nodes.
+
+![Cluster Explorer](images/28.png)
+
+7. The whole deployment doesn't have any impact on the OKE cluster. Now click on the **Deployment** item in the left side menu to check your Helidon quickstart-mp application.
+
+![Nodes](images/29.png)
+
+8. You can see several deployments. Click on the *hello-helidon-deployment*.
+
+![Deployments](images/30.png)
+
+9. On the *Deployment* page you can see your application deployment. A deployment provides declarative updates for pods and replicasets. The pod name contains an auto generated unique string to identify that particular replica. To see how many and what type of containers are running in this pod click on the name.
+
+![Helidon deployment](images/31.png)
+
+10. You should see two containers in the pod. The *hello-helidon-container* runs the "real" application and the other is the sidecar container which is automatically injected and necessary to take the advantage of the Istio features. Here you can check the application's log in the container. Click on the dotted menu button at top right corner and select **View Logs**.
+
+![Pod](images/32.png)
+
+11. Make sure that the Helidon quickstart-mp application's container is selected in the log window. Find the custom `Help requested!` log entry. If you can't see the application log then click the **Settings** (blue button with the gear icon) and change the time filter to show all the log entries from the container start.
+
+![Pod](images/33.png)
+
+Congratulations you have successfully completed the Helidon application deployment on Verrazzano lab.
 
 ## Acknowledgements
 
-* **Author** -  Ankit Pandey
+* **Author** -  Peter Nagy
 * **Contributors** - Maciej Gruszka, Peter Nagy
 * **Last Updated By/Date** - Peter Nagy, August 2021
