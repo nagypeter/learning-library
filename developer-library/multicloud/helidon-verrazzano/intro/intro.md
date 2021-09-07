@@ -4,7 +4,7 @@
 
 This lab offers attendees an intro-level, hands-on session with Helidon and Verrazzano. You will learn how to make and assemble services and deploy them on an enterprise container platform.
 
-This is a BYOL (Bring Your Own Laptop) session, so bring your Windows, OSX, or Linux laptop. You will need JDK 11+, Apache Maven (3.6+), and Docker installed before you begin.
+This is a BYOL (Bring Your Own Laptop) session, so bring your Windows, OSX, or Linux laptop. You will need JDK 11+, Apache Maven (3.6), and Docker installed before you begin.
 
 During this lab you will install Helidon CLI tools and develop the HTTP microservice application. For Verrazzano you will set up Oracle Kubernetes Engine (OKE) on Oracle Cloud Infrastructure using Oracle Cloud Free Tier account. The Free Tier account is sufficient to explore and learn how to run and operate microservice applications on an enterprise level.
 
