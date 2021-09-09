@@ -40,7 +40,7 @@ Your *Region Name* is located in top right corner in the Oracle Cloud Console, i
 In the Console, open the navigation menu and click **Developer Services**. Under **Containers & Artifacts**, click **Container Registry**.
 ![Tenancy Namespace](images/20.png)
 
-The tenancy namespace is listed in the compartment. For example, in this compartment the tenancy namespace is *id9hokcxpkra*. Copy and save it in a text editor. You will use this information in the next lab, too.
+The tenancy namespace is listed in the compartment. Copy and save it in a text editor. You will use this information in the next lab, too.
 ![Tenancy Namespace](images/16.png)
 
 3. Locate the *Endpoint for Your Region*. <br>
@@ -57,8 +57,8 @@ Refer to the table documented at this URL [https://docs.oracle.com/en-us/iaas/Co
 ```
 The build will produce the following result:
 ```bash
-$ docker build iad.ocir.io/id9hokcxpkra/quickstart-mp:1.0 .
-> docker pull iad.ocir.io/id9hokcxpkra/quickstart-mp:1.0
+$ docker build iad.ocir.io/tenancynamespace/quickstart-mp:1.0 .
+> docker pull iad.ocir.io/tenancynamespace/quickstart-mp:1.0
 [+] Building 107.5s (19/19) FINISHED                                                                                                            
  => [internal] load build definition from Dockerfile                                                                                       0.1s
  => => transferring dockerfile: 785B                                                                                                       0.1s
@@ -106,7 +106,7 @@ This creates the Docker image, what you can check in your local repository.
 $ docker images
 
 REPOSITORY                                                                           TAG                               IMAGE ID       CREATED         SIZE
-iad.ocir.io/id9hokcxpkra/quickstart-mp                                                1.0                               587a079ad854   5 minutes ago   243MB
+iad.ocir.io/tenancynamespace/quickstart-mp                                                1.0                               587a079ad854   5 minutes ago   243MB
 ```
 Copy to your text editor the replaced full image name `END_POINT_OF_YOUR_REGION`/`NAMESPACE_OF_YOUR_TENANCY`/quickstart-mp:1.0 because you will need it later.
 
@@ -180,8 +180,8 @@ Login Succeeded
 ```
 The result should look like this:
 ```bash
-$ docker push iad.ocir.io/id9hokcxpkra/quickstart-mp:1.0
-The push refers to repository [iad.ocir.io/id9hokcxpkra/quickstart-mp]
+$ docker push iad.ocir.io/tenancynamespace/quickstart-mp:1.0
+The push refers to repository [iad.ocir.io/tenancynamespace/quickstart-mp]
 0795b8384c47: Pushed
 131452972f9d: Pushed
 93c53f2e9519: Pushed
