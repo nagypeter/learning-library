@@ -21,7 +21,7 @@ In this lab you will build a Docker image with your Helidon application and push
 
 We'll start by preparing the Docker image that you will use to deploy on Verrazzano.
 
-We are creating a Docker image, which you will upload to Oracle Cloud Container Registry belongs to your OCI account. To do so you need to create image name which reflects your registry coordinates.
+We are creating a Docker image, which you will upload to the Oracle Cloud Container Registry that belongs to your OCI account. To do so you need to create an image name which reflects your registry coordinates.
 
 You need the following information:
 
@@ -136,11 +136,14 @@ In this step, we are going to generate an *Authentication Token*, that we will u
 
 ## Task 3: Push the Helidon Application (quickstart-mp) Docker Image to your Container Registry Repository
 
-In Task 1 of this lab you opened a URL [https://docs.oracle.com/en-us/iaas/Content/Registry/Concepts/registryprerequisites.htm#Availab](https://docs.oracle.com/en-us/iaas/Content/Registry/Concepts/registryprerequisites.htm#Availab) and determined the endpoint for your Region name in a text editor. In our example the Region Name is US East (Ashburn). You will need this information for this task.
+In Task 1 of this lab you opened a URL [https://docs.oracle.com/en-us/iaas/Content/Registry/Concepts/registryprerequisites.htm#Availab](https://docs.oracle.com/en-us/iaas/Content/Registry/Concepts/registryprerequisites.htm#Availab) and determined the endpoint for your Region name and copied it to a text editor. In our example the Region Name is US East (Ashburn). You will need this information for this task.
 
 ![Endpoint](images/5.png)
 
-1. In Task 1 of this lab you determined the endpoint for your Region name and copied it to a text editor. In our example the Region Name is *US East (Ashburn)* and the endpoint is *iad.ocir.io*. You will need this information for this task. Copy the following command and paste it in your text editor and then replace the `END_POINT_OF_REGION_NAME` with the endpoint of your region.
+1. Copy the following command and paste it in your text editor and then replace the `END_POINT_OF_REGION_NAME` with the endpoint of your region.
+
+  >In our example the Region Name is *US East (Ashburn)* and the endpoint is *iad.ocir.io*. You will need your specific information for this task. 
+
 ```bash
 <copy>docker login END_POINT_OF_REGION_NAME</copy>
 ```

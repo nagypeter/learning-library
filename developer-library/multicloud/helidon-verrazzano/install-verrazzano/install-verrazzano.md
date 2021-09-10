@@ -41,9 +41,9 @@ You will use the *Cloud Shell* to complete this workshop.
 
 We will use `kubectl` to manage the cluster remotely using the Cloud Shell. It needs a `kubeconfig` file. This will be generated using the OCI CLI which is pre-authenticated, so there’s no setup to do before you can start using it.
 
-1. Click *Access Cluster* on your cluster detail page.
+1. Click **Access Cluster** on your cluster detail page.
 
-    > If you moved away from that page, then open the navigation menu and under *Developer Services*, select *Kubernetes Clusters (OKE)*. Select your cluster and go the detail page.
+    > If you moved away from that page, then open the navigation menu and under **Developer Services**, select **Kubernetes Clusters (OKE)**. Select your cluster and go the detail page.
 
     ![Access Cluster](images/1.png)
 
@@ -53,11 +53,13 @@ We will use `kubectl` to manage the cluster remotely using the Cloud Shell. It n
 
     ![Copy kubectl Config](images/2.png)
 
-3. Click **Launch Cloud Shell** to open the built-in console. Close the configuration dialog before you paste the command into the *Cloud Shell*.
+3. Click **Launch Cloud Shell** to open the built-in console. Close the configuration dialog before you paste the command into the Cloud Shell.
 
     ![Launch Cloud Shell](images/3.png)
 
-4. Copy the command from the clipboard and paste it into the Cloud Shell and run the command.
+4. Copy the command from the clipboard and paste it into the local terminal window where you built the `Helidon quickstart` app.
+
+    >Make sure that Docker is installed and running.
 
     For example, the command looks like the following:
 
