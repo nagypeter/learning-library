@@ -198,7 +198,7 @@ image: "ocir.io/tenancynamespace/quickstart-mp:1.0"
 
 6. We need to make Verrazzano aware that we store in that namespace Verrazzano artifacts. So we need to add a label identifying the `hello-helidon` namespace as managed by Verrazzano. Labels are intended to be used to specify identifying attributes of objects that are meaningful and relevant to users.
 
-  Here, for the `hello-helidon` namespace, we are attaching a label to it, which marks this namespace as managed by Verrazzano. The *istio-injection=enabled*, enables an Istio "sidecar", and as such, helps establish an Istio proxy. With an Istio proxy, we can access other Istio services like an Istio gateway. To add the label to the bobs-books namespace with the previously mentioned attributes, copy the following command and run it in the Cloud Shell:
+  Here, for the `hello-helidon` namespace, we are attaching a label to it, which marks this namespace as managed by Verrazzano. The *istio-injection=enabled*, enables an Istio "sidecar", and as such, helps establish an Istio proxy. With an Istio proxy, we can access other Istio services like an Istio gateway. To add the label to the `hello-helidon` namespace with the previously mentioned attributes, copy the following command and run it in the Cloud Shell:
 
   ```bash
   <copy>
@@ -206,8 +206,7 @@ image: "ocir.io/tenancynamespace/quickstart-mp:1.0"
   </copy>
   ```
 
-  >We now have a Kuberneter cluster, *cluster1*, with three nodes.
-
+  
 7. Now, we want to deploy Helidon *quickstart-mp* containerized application on *cluster1*. For this, we need a Kubernetes deployment configuration. This deployment instructs the Kubernetes to create and update instances for the Helidon *quickstart-mp* application. Here, we have the `hello-helidon-comp.yaml` file, which instructs Kubernetes.
 
 To deploy the Helidon *quickstart-mp* application, copy and paste the following two commands as shown. The `hello-helidon-comp.yaml` file contains definitions of various OAM components, where, an OAM component is a Kubernetes Custom Resource describing an application’s general composition and environment requirements.
