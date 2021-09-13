@@ -43,7 +43,9 @@ You must have an [Oracle Cloud Infrastructure](https://cloud.oracle.com/en_US/cl
 
     * **Name**: The name of the cluster. Accept the default value.
     * **Compartment**: The name of the compartment. Accept the default value.
-    * **Kubernetes Version**: The version of Kubernetes. Accept the default value which should be **v1.19.7** or select the latest version available.
+    * **Kubernetes Version**: The version of Kubernetes. Select the **v1.19.7** version.
+    > **Caution**: *Do not accept the default, highest available version of Kubernetes due to a known Kibana/Elasticsearch issue*.
+
     * **Kubernetes API Endpoint**: Determines if the cluster master nodes are going to be routable or not. Select the **Public Endpoint** value.
     * **Kubernetes Worker Nodes**: Determines if the cluster worker nodes are going to be routable or not. Accept the default value **Private Workers**.
     * **Shape**: The shape to use for each node in the node pool. The shape determines the number of CPUs and the amount of memory allocated to each node. The list shows only those shapes available in your tenancy that are supported by OKE. Select **VM.Standard.E2.4**.<br>
@@ -78,4 +80,4 @@ You must have an [Oracle Cloud Infrastructure](https://cloud.oracle.com/en_US/cl
 
 * **Author** -  Ankit Pandey
 * **Contributors** - Maciej Gruszka, Peter Nagy
-* **Last Updated By/Date** - Peter Nagy, August 2021
+* **Last Updated By/Date** - Peter Nagy, September 2021

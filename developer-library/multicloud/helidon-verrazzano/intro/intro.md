@@ -25,7 +25,7 @@ This workshop is designed to be as self-explanatory as possible, but feel free t
 ### Prerequisites
 This lab assumes you have the following installed on your machine:
 * JDK 11+
-* Apache Maven (3.6+)
+* Apache Maven (3.6)
 * Docker
 
 
@@ -60,4 +60,4 @@ Verrazzano includes the following capabilities:
 
 * **Author** -  Peter Nagy
 * **Contributors** - Maciej Gruszka, Peter Nagy
-* **Last Updated By/Date** - Peter Nagy, August 2021
+* **Last Updated By/Date** - Peter Nagy, September 2021

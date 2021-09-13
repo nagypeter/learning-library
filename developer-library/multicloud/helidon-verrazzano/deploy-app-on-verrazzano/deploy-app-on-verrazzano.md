@@ -165,8 +165,8 @@ weblogic-operator-786b8db578-gtf54                 2/2     Running   0          
 
 ```bash
 <copy>
-curl -LSs https://raw.githubusercontent.com/nagypeter/learning-library/master/developer-library/multicloud/helidon-verrazzano/hello-helidon-app.yaml >~/hello-helidon-app.yaml
-curl -LSs https://raw.githubusercontent.com/nagypeter/learning-library/master/developer-library/multicloud/helidon-verrazzano/hello-helidon-comp.yaml >~/hello-helidon-comp.yaml
+curl -LSs https://raw.githubusercontent.com/oracle/learning-library/master/developer-library/multicloud/helidon-verrazzano/hello-helidon-app.yaml >~/hello-helidon-app.yaml
+curl -LSs https://raw.githubusercontent.com/oracle/learning-library/master/developer-library/multicloud/helidon-verrazzano/hello-helidon-comp.yaml >~/hello-helidon-comp.yaml
 cd ~
 </copy>
 ```
@@ -206,7 +206,7 @@ image: "ocir.io/tenancynamespace/quickstart-mp:1.0"
   </copy>
   ```
 
-  
+
 7. Now, we want to deploy Helidon *quickstart-mp* containerized application on *cluster1*. For this, we need a Kubernetes deployment configuration. This deployment instructs the Kubernetes to create and update instances for the Helidon *quickstart-mp* application. Here, we have the `hello-helidon-comp.yaml` file, which instructs Kubernetes.
 
 To deploy the Helidon *quickstart-mp* application, copy and paste the following two commands as shown. The `hello-helidon-comp.yaml` file contains definitions of various OAM components, where, an OAM component is a Kubernetes Custom Resource describing an application’s general composition and environment requirements.
@@ -267,4 +267,4 @@ You should see the same result you received during the development:
 
 * **Author** -  Peter Nagy
 * **Contributors** - Maciej Gruszka, Peter Nagy
-* **Last Updated By/Date** - Peter Nagy, August 2021
+* **Last Updated By/Date** - Peter Nagy, September 2021
