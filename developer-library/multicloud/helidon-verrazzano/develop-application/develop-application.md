@@ -161,7 +161,9 @@ java -jar target/quickstart-mp.jar
 Open a new terminal/console and run the following commands to check the application:
 
 ```bash
+<copy>
 curl -X GET http://localhost:8080/greet
+</copy>
 {"message":"Hello World!"}
 ```
 
