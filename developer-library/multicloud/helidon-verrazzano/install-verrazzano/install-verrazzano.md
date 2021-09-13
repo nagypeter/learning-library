@@ -57,9 +57,7 @@ We will use `kubectl` to manage the cluster remotely using the Cloud Shell. It n
 
     ![Launch Cloud Shell](images/3.png)
 
-4. Copy the command from the clipboard and paste it into the local terminal window where you built the `Helidon quickstart` app.
-
-    >Make sure that Docker is installed and running.
+4. Copy the command from the clipboard and paste it into the Cloud Shell and run the command.
 
     For example, the command looks like the following:
 
@@ -79,16 +77,15 @@ You may need to run this command several times until you see the output similar 
     ```bash
     $ kubectl get node
     NAME          STATUS   ROLES   AGE    VERSION
-    10.0.10.112   Ready    node    4m32s   v1.20.8
-    10.0.10.200   Ready    node    4m32s   v1.20.8
-    10.0.10.36    Ready    node    4m28s   v1.20.8
+    10.0.10.112   Ready    node    4m32s   v1.19.7
+    10.0.10.200   Ready    node    4m32s   v1.19.7
+    10.0.10.36    Ready    node    4m28s   v1.19.7
     ```
 
     > If you see the node's information, then the configuration was successful.
 
 6. You can minimize and restore the terminal size at any time using the controls at the top right corner of the Cloud Shell.
 
-    ![cloud shell](images/5.png)
 
 7. Leave this *Cloud Shell* open; we will use it for further labs.
 
