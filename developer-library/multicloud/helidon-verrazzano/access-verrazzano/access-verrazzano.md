@@ -247,7 +247,7 @@ metadata:
 
 ![Index pattern](images/20.png)
 
-6. When the index ready you need to click the *Discover* shortcut icon on the left side.
+6. When the index is ready you need to click the *Discover* shortcut icon on the left side.
 
 ![Index pattern](images/35.png)
 

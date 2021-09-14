@@ -50,10 +50,10 @@ Refer to the table documented at this URL [https://docs.oracle.com/en-us/iaas/Co
 
 >Now you have both the tenancy namespace and endpoint for your region.
 
-4. Copy the following command and paste it in your text editor. Then replace the `END_POINT_OF_YOUR_REGION` with the endpoint of your region name and `NAMESPACE_OF_YOUR_TENANCY` with your tenancy's namespace.
+4. Copy the following command and paste it in your text editor. Then replace the `ENDPOINT_OF_YOUR_REGION` with the endpoint of your region name and `NAMESPACE_OF_YOUR_TENANCY` with your tenancy's namespace.
 
 ```bash
-<copy>docker build -t END_POINT_OF_YOUR_REGION/NAMESPACE_OF_YOUR_TENANCY/quickstart-mp:1.0 .</copy>
+<copy>docker build -t ENDPOINT_OF_YOUR_REGION/NAMESPACE_OF_YOUR_TENANCY/quickstart-mp:1.0 .</copy>
 ```
 When the command is ready then run in the terminal what was used to build and run the Helidon application `quickstart-mp` project. The build will produce the following result:
 ```bash
@@ -108,7 +108,7 @@ $ docker images
 REPOSITORY                                                                           TAG                               IMAGE ID       CREATED         SIZE
 iad.ocir.io/tenancynamespace/quickstart-mp                                                1.0                               587a079ad854   5 minutes ago   243MB
 ```
-Copy to your text editor the replaced full image name `END_POINT_OF_YOUR_REGION/NAMESPACE_OF_YOUR_TENANCY/quickstart-mp:1.0` because you will need it later.
+Copy to your text editor the replaced full image name `ENDPOINT_OF_YOUR_REGION/NAMESPACE_OF_YOUR_TENANCY/quickstart-mp:1.0` because you will need it later.
 
 ## Task 2: Generate an Authentication Token to Login to the Oracle Cloud Container Registry
 
@@ -118,7 +118,7 @@ In this step, we are going to generate an *Authentication Token*, that we will u
 
 ![Users](images/1.png)
 
-2. Click on the non federated user name to view the details. (The non federated user name is basically your email address what was used during the trial signup.)
+2. Click on the non federated user name to view the details. (The non federated user name should be your email address -without any prefix- what was used during the trial signup.)
 
 ![User](images/14.png)
 
@@ -144,12 +144,12 @@ In Task 1 of this lab you opened a URL [https://docs.oracle.com/en-us/iaas/Conte
 
 ![Endpoint](images/5.png)
 
-1. Copy the following command and paste it in your text editor and then replace the `END_POINT_OF_REGION_NAME` with the endpoint of your region.
+1. Copy the following command and paste it in your text editor and then replace the `ENDPOINT_OF_REGION_NAME` with the endpoint of your region.
 
   >In our example the Region Name is *US East (Ashburn)* and the endpoint is *iad.ocir.io*. You will need your specific information for this task.
 
 ```bash
-<copy>docker login END_POINT_OF_REGION_NAME</copy>
+<copy>docker login ENDPOINT_OF_REGION_NAME</copy>
 ```
 
 2. In the previous step, you also determined the tenancy namespace.
