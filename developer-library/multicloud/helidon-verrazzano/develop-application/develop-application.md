@@ -186,17 +186,23 @@ curl -X GET http://localhost:8080/greet/Jose
 1. In the same terminal/console, run the following commands to check health and metrics:
 
 ```bash
+<copy>
 curl -s -X GET http://localhost:8080/health
+</copy>
 {"outcome":"UP",...
 . . .
 
 # Prometheus Format
+<copy>
 curl -s -X GET http://localhost:8080/metrics
+</copy>
 # TYPE base:gc_g1_young_generation_count gauge
 . . .
 
 # JSON Format
+<copy>
 curl -H 'Accept: application/json' -X GET http://localhost:8080/metrics
+</copy>
 {"base":...
 . . .
 
