@@ -231,20 +231,27 @@ metadata:
 
 ![Kibana link](images/17.png)
 
-2. Clicke *Proceed to ... default XX.XX.XX.XX.nip.io(unsafe)* if necessary.
-On the Kibana homepage click **Discover** or the shortcut menu icon on the left side.
+2. Click *Proceed to ... default XX.XX.XX.XX.nip.io(unsafe)* if necessary. First time Kibana shows the welcome page. It offers built in sample data to try Kibana but you can select the **Explore on my own** option, because Verrazzano completed the necessary configuration and the application data is already available.
+
+![Kibana welcome page](images/34.png)
+
+3. On the Kibana homepage click the **Discover** link or its shortcut menu icon on the left side.
 
 ![Kibana dashboard click](images/18.png)
 
-3. In order to find log entry in Elasticsearch first you need to define index pattern. Type `verrazzano-namespace-hello-helidon` in the **Index Pattern**. Select the result from the list below and click **Next**.
+4. In order to find log entry in Elasticsearch first you need to define index pattern. Type `verrazzano-namespace-hello-helidon` in the **Index Pattern**. Select the result from the list below and click **Next**.
 
 ![Index pattern](images/19.png)
 
-4. On the next page select *@timestamp* as **Time Filter** field name and click **Create Index pattern**.
+5. On the next page select *@timestamp* as **Time Filter** field name and click **Create Index pattern**.
 
 ![Index pattern](images/20.png)
 
-5. Type the custom log entry value you created in the Helidon application: `Help requested` into the filter textbox. Press **Enter** or click **Refresh**. You should get at least one result. <br>
+6. When the index ready you need to click the *Discover* shortcut icon on the left side.
+
+![Index pattern](images/35.png)
+
+7. Type the custom log entry value you created in the Helidon application: `Help requested` into the filter textbox. Press **Enter** or click **Refresh**. You should get at least one result. <br>
 >If you haven't hit the application endpoint, or that happened a long time ago, simply invoke again the following HTTP request in the Cloud Shell against your endpoint. You can execute request multiple times.
 ```bash
 <copy>curl -k https://$(kubectl get gateway hello-helidon-hello-helidon-appconf-gw -n hello-helidon -o jsonpath={.spec.servers[0].hosts[0]})/help/allGreetings; echo</copy>

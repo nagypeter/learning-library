@@ -55,7 +55,7 @@ Refer to the table documented at this URL [https://docs.oracle.com/en-us/iaas/Co
 ```bash
 <copy>docker build -t END_POINT_OF_YOUR_REGION/NAMESPACE_OF_YOUR_TENANCY/quickstart-mp:1.0 .</copy>
 ```
-The build will produce the following result:
+When the command is ready then run in the terminal what was used to build and run the Helidon application `quickstart-mp` project. The build will produce the following result:
 ```bash
 $ docker build iad.ocir.io/tenancynamespace/quickstart-mp:1.0 .
 > docker pull iad.ocir.io/tenancynamespace/quickstart-mp:1.0
@@ -108,29 +108,33 @@ $ docker images
 REPOSITORY                                                                           TAG                               IMAGE ID       CREATED         SIZE
 iad.ocir.io/tenancynamespace/quickstart-mp                                                1.0                               587a079ad854   5 minutes ago   243MB
 ```
-Copy to your text editor the replaced full image name `END_POINT_OF_YOUR_REGION`/`NAMESPACE_OF_YOUR_TENANCY`/quickstart-mp:1.0 because you will need it later.
+Copy to your text editor the replaced full image name `END_POINT_OF_YOUR_REGION/NAMESPACE_OF_YOUR_TENANCY/quickstart-mp:1.0` because you will need it later.
 
 ## Task 2: Generate an Authentication Token to Login to the Oracle Cloud Container Registry
 
 In this step, we are going to generate an *Authentication Token*, that we will use to log in to the Oracle Cloud Container Registry.
 
-1. Select the User Icon in the top right corner and then click **User Settings**.
+1. In the Console, open the navigation menu and click **Identity and Security**. Under **Identity**, click **Users**.
 
-![User Settings](images/1.png)
+![Users](images/1.png)
 
-2. Scroll down and click **Auth Tokens**.
+2. Click on the non federated user name to view the details. (The non federated user name is basically your email address what was used during the trial signup.)
+
+![User](images/14.png)
+
+3. In the User Detail page scroll down and click **Auth Tokens**.
 
 ![Auth tokens](images/2.png)
 
-3. Click **Generate Token**.
+4. Click **Generate Token**.
 
 ![Generate Token](images/3.png)
 
-4. Copy *quickstart-mp* and paste it in the *Description* box and click **Generate Token**.
+5. Copy *quickstart-mp* and paste it in the *Description* box and click **Generate Token**.
 
 ![Token create](images/4.png)
 
-5. Click **Copy** under Generated Token and paste it in the text editor. You cannot copy it later, so make sure you have a copy of this token saved.
+6. Click **Copy** under Generated Token and paste it in the text editor. You cannot copy it later, so make sure you have a copy of this token saved.
 
 ![Generated Token](images/13.png)
 
@@ -142,20 +146,20 @@ In Task 1 of this lab you opened a URL [https://docs.oracle.com/en-us/iaas/Conte
 
 1. Copy the following command and paste it in your text editor and then replace the `END_POINT_OF_REGION_NAME` with the endpoint of your region.
 
-  >In our example the Region Name is *US East (Ashburn)* and the endpoint is *iad.ocir.io*. You will need your specific information for this task. 
+  >In our example the Region Name is *US East (Ashburn)* and the endpoint is *iad.ocir.io*. You will need your specific information for this task.
 
 ```bash
 <copy>docker login END_POINT_OF_REGION_NAME</copy>
 ```
 
 2. In the previous step, you also determined the tenancy namespace.
-Enter the Username as follows: `NAMESPACE_OF_YOUR_TENANCY`/oracleidentitycloudservice/`YOUR_ORACLE_CLOUD_USERNAME`. <br>
+Enter the Username as follows: `NAMESPACE_OF_YOUR_TENANCY`/`YOUR_ORACLE_CLOUD_USERNAME`. <br>
 * Replace `NAMESPACE_OF_YOUR_TENANCY` with your tenancy's namespace
 * Replace `YOUR_ORACLE_CLOUD_USERNAME` with your Oracle Cloud Account user name and then copy the replaced username from your text editor and paste it in the *Cloud Shell*.
 * For Password, copy and paste the Authentication Token from your text editor (or wherever you saved it.)
 ```bash
 $ docker login iad.ocir.io
-Username: tenancynamespace/oracleidentitycloudservice/YOUR_ORACLE_CLOUD_USERNAME
+Username: NAMESPACE_OF_YOUR_TENANCY/YOUR_ORACLE_CLOUD_USERNAME
 Password:
 Login Succeeded
 ```
@@ -179,7 +183,7 @@ Login Succeeded
 7. To push your Docker image into your repository inside the Oracle Cloud Container Registry, copy and paste the following command in your text editor and then replace `ENDPOINT_OF_YOUR_REGION_NAME`/`NAMESPACE_OF_YOUR_TENANCY`/quickstar-mp:1.0 with Docker image full name, which you saved earlier.
 
 ```bash
-<copy>docker push `ENDPOINT_OF_YOUR_REGION_NAME`/`NAMESPACE_OF_YOUR_TENANCY`/quickstart-mp:1.0</copy>
+<copy>docker push ENDPOINT_OF_YOUR_REGION_NAME/NAMESPACE_OF_YOUR_TENANCY/quickstart-mp:1.0</copy>
 ```
 The result should look like this:
 ```bash
@@ -205,4 +209,4 @@ e1434e7d0308: Pushed
 
 * **Author** -  Peter Nagy
 * **Contributors** - Maciej Gruszka, Peter Nagy
-* **Last Updated By/Date** - Peter Nagy, August 2021
+* **Last Updated By/Date** - Peter Nagy, September 2021

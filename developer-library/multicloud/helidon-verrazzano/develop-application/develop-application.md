@@ -168,16 +168,22 @@ curl -X GET http://localhost:8080/greet
 ```
 
 ```bash
+<copy>
 curl -X GET http://localhost:8080/greet/Joe
+</copy>
 {"message":"Hello Joe!"}
 ```
 
 ```bash
+<copy>
 curl -X PUT -H "Content-Type: application/json" -d '{"greeting" : "Hola"}' http://localhost:8080/greet/greeting
+</copy>
 ```
 
 ```bash
+<copy>
 curl -X GET http://localhost:8080/greet/Jose
+</copy>
 {"message":"Hola Jose!"}
 ```
 
@@ -191,21 +197,23 @@ curl -s -X GET http://localhost:8080/health
 </copy>
 {"outcome":"UP",...
 . . .
+```
 
+```bash
 # Prometheus Format
 <copy>
 curl -s -X GET http://localhost:8080/metrics
 </copy>
 # TYPE base:gc_g1_young_generation_count gauge
 . . .
-
+```
+```bash
 # JSON Format
 <copy>
 curl -H 'Accept: application/json' -X GET http://localhost:8080/metrics
 </copy>
 {"base":...
 . . .
-
 ```
 
 2. Stop the *quickstart-mp* application by entering `Ctrl + C` in the terminal where the "java -jar target/quickstart-mp.jar" command is running.

@@ -74,7 +74,7 @@ You must have an [Oracle Cloud Infrastructure](https://cloud.oracle.com/en_US/cl
 
     ![cluster1](images/9.png)
 
-7. When the cluster status changes to Active, continue to the Helidon application development lab.
+7. To save time don't wait to the Active state, continue to the Helidon application development lab.
 
 ## Acknowledgements
 
